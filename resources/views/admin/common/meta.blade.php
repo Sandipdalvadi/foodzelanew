@@ -5,8 +5,12 @@
     <meta name="description" content="Cuba admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
-    <link rel="icon" href="{{asset('/public/assets/images/favicon.png')}}" type="image/x-icon">
-    <link rel="shortcut icon" href="{{asset('/public/assets/images/favicon.png')}}"  type="image/x-icon">
+    @php
+        $siteSettings = App\Models\SiteSettings::first();   
+        $siteSettings = !empty($siteSettings) ? $siteSettings : new SiteSettings;
+    @endphp
+    <link rel="icon" href="{{ $siteSettings->logo != '' ? file_exists_in_folder('sitesetting', $siteSettings->logo) : file_exists_in_folder('default_images', 'blank_image.jpeg') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ $siteSettings->logo != '' ? file_exists_in_folder('sitesetting', $siteSettings->logo) : file_exists_in_folder('default_images', 'blank_image.jpeg') }}"  type="image/x-icon">
     <title>Cuba - Premium Admin Template</title>
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
@@ -31,4 +35,12 @@
 <link rel="stylesheet" type="text/css" href="{{asset('/public/assets/css/style.css')}}">
 <link id="color" rel="stylesheet" href="{{asset('/public/assets/css/color-1.css" media="screen')}}">
 <!-- Responsive css-->
-<link rel="stylesheet" type="text/css" href="{{asset('/public/assets/css/responsive.css')}}">      </head>
+<link rel="stylesheet" type="text/css" href="{{asset('/public/assets/css/responsive.css')}}">
+<script src="{{asset('public/assets/js/jquery-3.5.1.min.js')}}"></script>
+<script src="{{asset('public/assets/js/script.js')}}"></script>    <!-- latest jquery-->
+
+<!-- Bootstrap js-->
+<script src="{{asset('public/assets/js/bootstrap/popper.min.js')}}"></script>
+<script src="{{asset('public/assets/js/bootstrap/bootstrap.js')}}"></script>
+
+</head>

@@ -19,4 +19,22 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('admin/home', 'HomeController@adminHome')->name('admin.home')->middleware('admin');
+Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
+
+    Route::get('home', 'HomeController@adminHome')->name('admin.home');
+    Route::get('locale/{locale}', function ($locale){
+        Session::put('locale', $locale);
+        return redirect()->back();
+    })->name('admin.lang');
+    
+    Route::get('sitesetting/index', 'SiteSettingController@index')->name('admin.sitesetting.index');
+    Route::post('sitesetting/save', 'SiteSettingController@save')->name('admin.sitesetting.save');
+    Route::get('terms_conditions/index', 'TermsConditionsController@index')->name('admin.terms_conditions.index');
+    Route::post('terms_conditions/save', 'TermsConditionsController@save')->name('admin.terms_conditions.save');
+    Route::get('about_us/index', 'AboutUsController@index')->name('admin.about_us.index');
+    Route::post('about_us/save', 'AboutUsController@save')->name('admin.about_us.save');
+    Route::get('profile/index', 'ProfileController@index')->name('admin.profile.index');
+    Route::post('profile/save', 'ProfileController@save')->name('admin.profile.save');
+    
+    
+});

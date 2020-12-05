@@ -14,10 +14,15 @@
                 </div>
             </div>
         </form>
+        @php
+            $siteSettings = App\Models\SiteSettings::first();   
+            $siteSettings = !empty($siteSettings) ? $siteSettings : new SiteSettings;
+        @endphp
+        
         <div class="header-logo-wrapper">
             <div class="logo-wrapper">
-                <a href="http://laravel.pixelstrap.com/cuba"><img class="img-fluid"
-                        src="http://laravel.pixelstrap.com/cuba/assets/images/logo/logo.png" alt="" /></a>
+                <a href="{{route('admin.home')}}"><img class="img-fluid"
+                        src="{{ $siteSettings->logo != '' ? file_exists_in_folder('sitesetting', $siteSettings->logo) : file_exists_in_folder('default_images', 'blank_image.jpeg') }}" alt="" /></a>
             </div>
             <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="sliders"></i></div>
         </div>
@@ -33,13 +38,13 @@
                             </div>
                         </div>
                         <div class="more_lang">
-                            <a href="http://laravel.pixelstrap.com/cuba/lang/en" class="active">
+                            <a href="{{URL::To('admin/locale/en')}}" class="{{ app()->getLocale() == 'en' ? 'active' : ''}}">
                                 <div class="lang selected" data-value="en"><i class="flag-icon flag-icon-us"></i> <span
                                         class="lang-txt">English</span><span> (US)</span></div>
                             </a>
-                            <a href="http://laravel.pixelstrap.com/cuba/lang/de" class=" ">
+                            <a href="{{URL::To('admin/locale/ar')}}" class="{{ app()->getLocale() == 'ar' ? 'active' : ''}}">
                                 <div class="lang " data-value="de"><i class="flag-icon flag-icon-de"></i> <span
-                                        class="lang-txt">Deutsch</span></div>
+                                        class="lang-txt">Arabic</span></div>
                             </a>
                         </div>
                     </div>
@@ -77,7 +82,7 @@
                 </li>
                 <li class="profile-nav onhover-dropdown p-0 mr-0">
                     <div class="media profile-media">
-                        <img class="b-r-10" src="http://laravel.pixelstrap.com/cuba/assets/images/dashboard/profile.jpg"
+                        <img class="b-r-10" src="{{Auth::user()->profile_pic ? file_exists_in_folder('profile_pic', Auth::user()->profile_pic) : file_exists_in_folder('profile_pic', '')}}"
                             alt="" />
                         <div class="media-body">
                             <span>{{ Auth::user()->name }}</span>
@@ -86,7 +91,7 @@
                     </div>
                     <ul class="profile-dropdown onhover-show-div">
                         <li>
-                            <a href="#"><i data-feather="user"></i><span>Account </span></a>
+                            <a href="{{route('admin.profile.index')}}"><i data-feather="user"></i><span>Edit Profile </span></a>
                         </li>
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();

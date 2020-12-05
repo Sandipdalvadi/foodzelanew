@@ -27,6 +27,8 @@ class HomeController extends Controller
     }
     public function adminHome()
     {
+        // echo app()->getLocale();
+        // exit;
         return view('admin.dashboard');
     }
 }

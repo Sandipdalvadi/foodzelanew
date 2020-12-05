@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 @include('admin.common.meta')
 
 <body>
@@ -21,6 +21,7 @@
             @include('admin.common.footer')
         </div>
     </div>
+    
     @include('admin.common.script')
 </body>
 
