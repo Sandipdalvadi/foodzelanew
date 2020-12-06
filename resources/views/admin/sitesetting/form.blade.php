@@ -36,6 +36,14 @@
                                             src="{{ $siteSettings->logo != '' ? file_exists_in_folder('sitesetting', $siteSettings->logo) : file_exists_in_folder('default_images', 'blank_image.jpeg') }}"
                                             alt="Image" width="150px" />
                                         </div>
+
+                                        <div class="form-group">
+                                            <label class="col-form-label pt-0" for="logo">Dark Logo</label>
+                                            <input class="form-control" id="dark_logo" type="file" placeholder="Dark Logo" name="dark_logo" >
+                                            <img id="dark_logo_img"
+                                            src="{{ $siteSettings->dark_logo != '' ? file_exists_in_folder('sitesetting', $siteSettings->dark_logo) : file_exists_in_folder('default_images', 'blank_image.jpeg') }}"
+                                            alt="Image" width="150px" />
+                                        </div>
                                         <div class="form-group">
                                             <label class="col-form-label pt-0" for="logo">Favicon Logo</label>
                                             <input class="form-control" id="favicon_logo" type="file" placeholder="Favicon Logo" name="favicon_logo" >
@@ -77,7 +85,9 @@
         $("#favicon_logo").change(function() {
             readURL(this,"favicon_logo_img");
         });
-        
 
+        $("#dark_logo").change(function() {
+            readURL(this,"dark_logo_img");
+        });
     </script>
 @endsection

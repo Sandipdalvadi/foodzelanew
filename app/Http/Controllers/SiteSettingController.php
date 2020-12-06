@@ -45,6 +45,16 @@ class SiteSettingController extends Controller
             $siteSettings->logo = $logoImage;    
         }
 
+        if ($files = $request->file('dark_logo')) 
+        {
+            $destinationPath = public_path('sitesetting/');
+            $logoImage = time() . "." . $files->getClientOriginalName();
+            $files->move($destinationPath, $logoImage);
+
+
+            old_file_remove('sitesetting',$siteSettings->dark_logo);
+            $siteSettings->dark_logo = $logoImage;    
+        }
         if ($files = $request->file('favicon_logo')) 
         {
             $destinationPath = public_path('sitesetting/');
