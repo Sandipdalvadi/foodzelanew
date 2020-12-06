@@ -9,8 +9,8 @@
         $siteSettings = App\Models\SiteSettings::first();   
         $siteSettings = !empty($siteSettings) ? $siteSettings : new SiteSettings;
     @endphp
-    <link rel="icon" href="{{ $siteSettings->logo != '' ? file_exists_in_folder('sitesetting', $siteSettings->logo) : file_exists_in_folder('default_images', 'blank_image.jpeg') }}" type="image/x-icon">
-    <link rel="shortcut icon" href="{{ $siteSettings->logo != '' ? file_exists_in_folder('sitesetting', $siteSettings->logo) : file_exists_in_folder('default_images', 'blank_image.jpeg') }}"  type="image/x-icon">
+    <link rel="icon" href="{{ $siteSettings->favicon_logo != '' ? file_exists_in_folder('sitesetting', $siteSettings->favicon_logo) : file_exists_in_folder('default_images', 'blank_image.jpeg') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ $siteSettings->favicon_logo != '' ? file_exists_in_folder('sitesetting', $siteSettings->favicon_logo) : file_exists_in_folder('default_images', 'blank_image.jpeg') }}"  type="image/x-icon">
     <title>Cuba - Premium Admin Template</title>
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
