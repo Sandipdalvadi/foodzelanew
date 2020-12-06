@@ -15,8 +15,12 @@ Route::get('/', function () {
     return view('auth.login');
     // return view('welcome');
 });
-
 Auth::routes();
+
+Route::get('/ForgotPassword/{id}/{token}','HomeController@forgotPwd');
+Route::post('/passwordChange1','HomeController@passwordChange1')->name('passwordChange1');
+Route::get('/password_success','HomeController@password_success')->name('password_success');
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){

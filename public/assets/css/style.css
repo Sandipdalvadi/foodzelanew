@@ -27856,3 +27856,28 @@ body[class*='dark-'] .for-light {
 /**=====================
     63. Box-layout CSS ends
 ==========================**/
+
+
+
+
+/**=====================
+    My Extra Style Start
+==========================**/
+
+
+.login-card .logo img { max-height: 100px; }
+.sidebar-wrapper .logo-wrapper a img { max-height: 50px; margin-top: -18px; margin-bottom: -5px; }
+.profile-nav .profile-media img { width: 37px; height: 37px; }
+.page-wrapper.compact-wrapper .page-body-wrapper.sidebar-icon div.sidebar-wrapper .logo-icon-wrapper {
+    padding: 27px 10px; }
+.logo-icon-wrapper a img { max-width: 65px; }
+.profile-greeting .card-body { background-color: rgba(0,0,0,0.5); }
+
+
+
+/**=====================
+    My Extra Style End
+==========================**/
+
+
+

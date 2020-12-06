@@ -21,20 +21,20 @@
                 <div class="mobile-back text-right"><span>Back</span><i class="fa fa-angle-right pl-2" aria-hidden="true"></i></div>
              </li>
              <li class="sidebar-list">
-                <a class="sidebar-link sidebar-title active" href="{{route('admin.home')}}"><i data-feather="home"></i>{{ __('message.dashboard') }} 
+                <a class="sidebar-link sidebar-title link-nav" href="{{route('admin.home')}}"><i data-feather="home"></i><span>{{ __('message.dashboard') }} </span>
                 </a> 
              </li>
 
              <li class="sidebar-list">
-               <a class="sidebar-link sidebar-title" href="{{route('admin.sitesetting.index')}}"><i data-feather="home"></i>{{ __('message.sitesetting') }} 
+               <a class="sidebar-link sidebar-title link-nav" href="{{route('admin.sitesetting.index')}}"><i data-feather="settings"></i><span>{{ __('message.sitesetting') }} </span>
                </a> 
             </li>
             <li class="sidebar-list">
-               <a class="sidebar-link sidebar-title" href="{{route('admin.terms_conditions.index')}}"><i data-feather="home"></i>{{ __('message.terms_conditions') }} 
+               <a class="sidebar-link sidebar-title link-nav" href="{{route('admin.terms_conditions.index')}}"><i data-feather="clipboard"></i><span>{{ __('message.terms_conditions') }} </span>
                </a> 
             </li>
             <li class="sidebar-list">
-               <a class="sidebar-link sidebar-title" href="{{route('admin.about_us.index')}}"><i data-feather="home"></i>{{ __('message.about_us') }} 
+               <a class="sidebar-link sidebar-title link-nav" href="{{route('admin.about_us.index')}}"><i data-feather="users"></i><span>{{ __('message.about_us') }} </span>
                </a> 
             </li>
             

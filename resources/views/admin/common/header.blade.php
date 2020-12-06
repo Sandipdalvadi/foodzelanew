@@ -76,6 +76,9 @@
                         <li><a class="btn btn-primary" href="#">Check all notification</a></li>
                     </ul>
                 </li>
+                <li>
+                    <div class="mode"><i class="fa fa-moon-o"></i></div>
+                </li>
                 <li class="maximize">
                     <a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i
                             data-feather="maximize"></i></a>
@@ -94,9 +97,9 @@
                             <a href="{{route('admin.profile.index')}}"><i data-feather="user"></i><span>Edit Profile </span></a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();"><i data-feather="log-out"> </i>
+                                <span>{{ __('Logout') }}</span>
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf

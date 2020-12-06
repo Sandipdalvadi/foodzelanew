@@ -23,7 +23,6 @@ class SiteSettingController extends Controller
     public function save(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'logo' => 'required|max:255',
             'map_api_key'=>'required|max:255',
         ]);
         
@@ -45,6 +44,18 @@ class SiteSettingController extends Controller
             old_file_remove('sitesetting',$siteSettings->logo);
             $siteSettings->logo = $logoImage;    
         }
+
+        if ($files = $request->file('favicon_logo')) 
+        {
+            $destinationPath = public_path('sitesetting/');
+            $logoImage = time() . "." . $files->getClientOriginalName();
+            $files->move($destinationPath, $logoImage);
+
+
+            old_file_remove('sitesetting',$siteSettings->favicon_logo);
+            $siteSettings->favicon_logo = $logoImage;    
+        }
+        
         $siteSettings->map_api_key = $request->map_api_key;
         $siteSettings->save();
         $message = "Setting Updated Successfully";

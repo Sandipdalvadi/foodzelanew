@@ -37,6 +37,14 @@
                                             alt="Image" width="150px" />
                                         </div>
                                         <div class="form-group">
+                                            <label class="col-form-label pt-0" for="logo">Favicon Logo</label>
+                                            <input class="form-control" id="favicon_logo" type="file" placeholder="Favicon Logo" name="favicon_logo" >
+                                            <img id="favicon_logo_img"
+                                            src="{{ $siteSettings->favicon_logo != '' ? file_exists_in_folder('sitesetting', $siteSettings->favicon_logo) : file_exists_in_folder('default_images', 'blank_image.jpeg') }}"
+                                            alt="Image" width="150px" />
+                                        </div>
+                                        
+                                        <div class="form-group">
                                             <label for="map_api_key">MAP API KEY</label>
                                             <input class="form-control" id="map_api_key" type="text" placeholder="Map api key" name="map_api_key" value="{{$siteSettings->map_api_key ? $siteSettings->map_api_key : ''}}">
                                         </div>
@@ -53,19 +61,23 @@
         </div>
     </div>
     <script>
-        function readURL(input) {
+        function readURL(input,imgSrc) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
-                    $('#blah').attr('src', e.target.result);
+                    $('#'+imgSrc).attr('src', e.target.result);
                 }
                 reader.readAsDataURL(input.files[0]);
             }
         }
 
         $("#logo").change(function() {
-            readURL(this);
+            readURL(this,"blah");
         });
+        $("#favicon_logo").change(function() {
+            readURL(this,"favicon_logo_img");
+        });
+        
 
     </script>
 @endsection

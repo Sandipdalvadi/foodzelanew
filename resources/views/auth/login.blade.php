@@ -50,67 +50,68 @@ $siteSettings = !empty($siteSettings) ? $siteSettings : new SiteSettings;
 </head>
 
 <body>
+    <!-- login page start-->
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="login-card">
-                    <div>
-                        <div>
-                            <a class="logo" href="javascript:void(0)">
-                                <img class="img-fluid for-light"
-                                    src="{{ $siteSettings->logo != '' ? file_exists_in_folder('sitesetting', $siteSettings->logo) : file_exists_in_folder('default_images', 'blank_image.jpeg') }}"
-                                    alt="looginpage">
-                                <img class="img-fluid for-dark"
-                                    src="{{ $siteSettings->logo != '' ? file_exists_in_folder('sitesetting', $siteSettings->logo) : file_exists_in_folder('default_images', 'blank_image.jpeg') }}"
-                                    alt="looginpage">
-                            </a>
-                        </div>
-                        <div class="login-main">
-                            <form class="theme-form" method="POST" action="{{ route('login') }}">
-                                @csrf
+      <div class="row">
+        <div class="col-xl-7"><img class="bg-img-cover bg-center" src="{{ asset('/public/assets/images/login/2.jpg') }}" alt="looginpage"></div>
+        <div class="col-xl-5 p-0">
+          <div class="login-card">
+            <div>
+              <div>
+                <a class="logo" href="javascript:void(0)">
+                    <img class="img-fluid for-light"
+                        src="{{ $siteSettings->logo != '' ? file_exists_in_folder('sitesetting', $siteSettings->logo) : file_exists_in_folder('default_images', 'blank_image.jpeg') }}"
+                        alt="looginpage">
+                    <img class="img-fluid for-dark"
+                        src="{{ $siteSettings->logo != '' ? file_exists_in_folder('sitesetting', $siteSettings->logo) : file_exists_in_folder('default_images', 'blank_image.jpeg') }}"
+                        alt="looginpage">
+                </a>
+              </div>
+              <div class="login-main">
+                <form class="theme-form" method="POST" action="{{ route('login') }}">
+                    @csrf
 
-                                <div class="form-group">
-                                    <label for="email" class="col-form-label">{{ __('E-Mail Address') }}</label>
-                                    <input class="form-control @error('email') is-invalid @enderror" id="email"
-                                        type="email" required="" placeholder="Test@gmail.com" name="email"
-                                        value="{{ old('email') }}">
+                    <div class="form-group">
+                        <label for="email" class="col-form-label">{{ __('E-Mail Address') }}</label>
+                        <input class="form-control @error('email') is-invalid @enderror" id="email"
+                            type="email" required="" placeholder="Test@gmail.com" name="email"
+                            value="{{ old('email') }}">
 
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-form-label">{{ __('Password') }}</label>
-                                    <input id="password" class="form-control @error('password') is-invalid @enderror"
-                                        type="password" name="password" required="" placeholder="*********">
-                                    <div class="show-hide"><span class="show"> </span></div>
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group mb-0">
-                                    <div class="checkbox p-0">
-                                        <input type="checkbox" name="remember" id="checkbox1"
-                                            {{ old('remember') ? 'checked' : '' }}>
-                                        <label class="text-muted" for="checkbox1">{{ __('Remember Me') }}</label>
-                                    </div>
-                                    @if (Route::has('password.request'))
-                                        <a class="link"
-                                            href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}?</a>
-                                        <button class="btn btn-primary btn-block" type="submit">Sign in</button>
-                                    @endif
-                                </div>
-                            </form>
-                        </div>
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label class="col-form-label">{{ __('Password') }}</label>
+                        <input id="password" class="form-control @error('password') is-invalid @enderror"
+                            type="password" name="password" required="" placeholder="*********">
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group mb-0">
+                        <div class="checkbox p-0">
+                            <input type="checkbox" name="remember" id="checkbox1"
+                                {{ old('remember') ? 'checked' : '' }}>
+                            <label class="text-muted" for="checkbox1">{{ __('Remember Me') }}</label>
+                        </div>
+                        @if (Route::has('password.request'))
+                            <a class="link"
+                                href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}?</a>
+                            <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+                        @endif
+                    </div>
+                </form>
             </div>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
+     </div>
     <script src="{{ asset('public/assets/js/jquery-3.5.1.min.js') }}"></script>
     <!-- Bootstrap js-->
     <script src="{{ asset('public/assets/js/bootstrap/popper.min.js') }}"></script>

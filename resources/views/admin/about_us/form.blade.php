@@ -22,7 +22,7 @@
         <!-- Container-fluid starts-->
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-12 col-xl-6">
+                <div class="col-sm-12 col-xl-12">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="card">
