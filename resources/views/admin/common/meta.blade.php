@@ -11,7 +11,7 @@
     @endphp
     <link rel="icon" href="{{ $siteSettings->favicon_logo != '' ? file_exists_in_folder('sitesetting', $siteSettings->favicon_logo) : file_exists_in_folder('default_images', 'blank_image.jpeg') }}" type="image/x-icon">
     <link rel="shortcut icon" href="{{ $siteSettings->favicon_logo != '' ? file_exists_in_folder('sitesetting', $siteSettings->favicon_logo) : file_exists_in_folder('default_images', 'blank_image.jpeg') }}"  type="image/x-icon">
-    <title>Cuba - Premium Admin Template</title>
+    <title>Foodzela Admin Template</title>
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">

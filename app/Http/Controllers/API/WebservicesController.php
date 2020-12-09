@@ -210,14 +210,11 @@ class WebservicesController extends Controller
         
     
     
-    public function editProfile(Request $request)  //api registration
+    public function editProfile(Request $request)  //api edit profile
     {
         $post = $request->all();
         $file = $request->file('profilePic');
         $decode = json_decode($post['json_content']);
-        // echo "<pre>";
-        // print_r($decode);
-        // exit;
         try {
             if ((!isset($decode->id)) || (!isset($decode->name)) || (!isset($decode->email)) || (!isset($decode->phone))) {
                 $response = array('success' => 0, 'message' => 'All Fields Are Required');
@@ -304,5 +301,32 @@ class WebservicesController extends Controller
             exit;
         }
     }
-
+    public function getProfileDetails()
+    {
+        $input = file_get_contents('php://input');
+        $post = json_decode($input, true);
+        
+        try {
+            if ((!isset($post['id'])) || (empty($post['id']))) {
+                $response = array('success' => 0, 'message' => 'All Fields Are Required');
+                echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+                exit;
+            }
+            $user = User::find($post['id']);     
+            if(empty($user)){
+                $response = array('success' => 0, 'message' => 'User Does not exists!');
+                echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+                exit;
+            }       
+            $userData = $this->userDetailResponse($user);
+            $response = array('success' => 1, 'message' => 'Profile Detail get Succeessfully','result' => $userData);
+            echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+            exit;
+        }
+        catch (Exception $e) {
+            $response = array('success' => 0, 'message' => $e->getMessage());
+            echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+            exit;
+        }
+    }
 }

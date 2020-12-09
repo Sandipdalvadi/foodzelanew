@@ -32,3 +32,21 @@
 <script src="{{asset('public/assets/js/theme-customizer/customizer.js')}}"></script>
 <!-- login js-->
 <!-- Plugin used-->
+<script src="{{ asset('public/assets/js/notify/bootstrap-notify.min.js') }}"></script>
+@if (Session::has('message'))
+    <script type="text/javascript">
+        $(function() {
+            notify("{{ Session::get('message') }}", "info", "bottom", "right")
+        });
+
+    </script>
+@endif
+@if ($alert = Session::get('error'))
+    <script type="text/javascript">
+        $(function() {
+            notify("{{ Session::get('error') }}", "danger", "bottom", "right")
+        });
+
+    </script>
+
+@endif

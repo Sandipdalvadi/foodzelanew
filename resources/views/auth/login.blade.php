@@ -125,7 +125,46 @@ $siteSettings = !empty($siteSettings) ? $siteSettings : new SiteSettings;
     <!-- Plugins JS Ends-->
     <!-- Theme js-->
     <script src="{{ asset('public/assets/js/script.js') }}"></script>
+    <script src="{{ asset('public/assets/js/notify/bootstrap-notify.min.js') }}"></script>
     <!-- Plugin used-->
+    <script>
+    $(document).ready(function () {
+    // notify("successfully",'success','bottom','right');
+    // notify("quantity_exceeds",'warning','bottom','right');
+    });
+    
+    function notify(message,type,from,align){		
+            $.notify({
+                // options
+                message: message 
+            },{
+                // settings
+                type: type,
+                placement: {
+                    from: from,
+                    align: align
+                }
+            });
+            
+        }
+    </script>
+    @if (Session::has('message'))
+        <script type="text/javascript">
+            $(function() {
+                notify("{{ Session::get('message') }}", "info", "bottom", "right")
+            });
+    
+        </script>
+    @endif
+    @if ($alert = Session::get('error'))
+        <script type="text/javascript">
+            $(function() {
+                notify("{{ Session::get('error') }}", "danger", "bottom", "right")
+            });
+    
+        </script>
+    
+    @endif
 </body>
 
 </html>
