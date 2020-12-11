@@ -5,7 +5,7 @@
             <div class="page-title">
                 <div class="row">
                     <div class="col-6">
-                        <h3>About Us</h3>
+                        <h3>{{ __('message.about_us') }}</h3>
                     </div>
                     <div class="col-6">
                         <ol class="breadcrumb">
@@ -13,7 +13,7 @@
                                 <a href="{{route('admin.home')}}"> <i
                                         data-feather="home"></i></a>
                             </li>
-                            <li class="breadcrumb-item">About Us</li>
+                            <li class="breadcrumb-item">{{ __('message.about_us') }}</li>
                         </ol>
                     </div>
                 </div>
@@ -31,20 +31,20 @@
                                         @csrf
                                         
                                         <div class="form-group">
-                                            <label for="editor0">About Us English <span style="color: red">*</span></label>
+                                            <label for="editor0">{{ __('message.about_us_english') }} <span style="color: red">*</span></label>
                                             <textarea name="about_us_en" id="editor0" cols="30" class="form-control editor" rows="10">
                                                 {!! $termsConditions->about_us_en ? $termsConditions->about_us_en : '' !!}
                                             </textarea>
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="editor1">About Us Arabic <span style="color: red">*</span></label>
+                                            <label for="editor1">{{ __('message.about_us_arabic') }} <span style="color: red">*</span></label>
                                             <textarea name="about_us_ar" id="editor1" cols="30" class="form-control editor" rows="10">
                                                 {!! $termsConditions->about_us_ar ? $termsConditions->about_us_ar : '' !!}
                                             </textarea>
                                         </div>
                                         <div class="form-group">
-                                            <button class="btn btn-primary" type="submit">Submit</button>
+                                            <button class="btn btn-primary" type="submit">{{ __('message.submit') }}</button>
                                         </div>
                                     </form>
                                 </div>

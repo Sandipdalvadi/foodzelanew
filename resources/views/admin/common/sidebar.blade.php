@@ -18,7 +18,7 @@
              <li class="back-btn">
             
                 <a href="{{route('admin.home')}}"><img class="img-fluid" src="{{ $siteSettings->logo != '' ? file_exists_in_folder('sitesetting', $siteSettings->logo) : file_exists_in_folder('default_images', 'blank_image.jpeg') }}" alt="" /></a>
-                <div class="mobile-back text-right"><span>Back</span><i class="fa fa-angle-right pl-2" aria-hidden="true"></i></div>
+                <div class="mobile-back text-right"><span>{{ __('message.back') }}</span><i class="fa fa-angle-right pl-2" aria-hidden="true"></i></div>
              </li>
              <li class="sidebar-list">
                 <a class="sidebar-link sidebar-title link-nav" href="{{route('admin.home')}}"><i data-feather="home"></i><span>{{ __('message.dashboard') }} </span>

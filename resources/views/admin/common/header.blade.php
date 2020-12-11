@@ -7,7 +7,7 @@
                         <input class="demo-input Typeahead-input form-control-plaintext w-100" type="text"
                             placeholder="Search Cuba .." name="q" title="" autofocus />
                         <div class="spinner-border Typeahead-spinner" role="status"><span
-                                class="sr-only">Loading...</span></div>
+                                class="sr-only">{{ __('message.loading') }}</span></div>
                         <i class="close-search" data-feather="x"></i>
                     </div>
                     <div class="Typeahead-menu"></div>
@@ -55,7 +55,7 @@
                     <ul class="notification-dropdown onhover-show-div">
                         <li>
                             <i data-feather="bell"></i>
-                            <h6 class="f-18 mb-0">Notitications</h6>
+                            <h6 class="f-18 mb-0">{{ __('message.notitications') }}</h6>
                         </li>
                         <li>
                             <p><i class="fa fa-circle-o mr-3 font-primary"> </i>Delivery processing <span
@@ -89,17 +89,17 @@
                             alt="" />
                         <div class="media-body">
                             <span>{{ Auth::user()->name }}</span>
-                            <p class="mb-0 font-roboto">Admin <i class="middle fa fa-angle-down"></i></p>
+                            <p class="mb-0 font-roboto">{{ Auth::user()->name }} <i class="middle fa fa-angle-down"></i></p>
                         </div>
                     </div>
                     <ul class="profile-dropdown onhover-show-div">
                         <li>
-                            <a href="{{route('admin.profile.index')}}"><i data-feather="user"></i><span>Edit Profile </span></a>
+                            <a href="{{route('admin.profile.index')}}"><i data-feather="user"></i><span>{{ __('message.edit_profile') }} </span></a>
                         </li>
                         <li>
                             <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();"><i data-feather="log-out"> </i>
-                                <span>{{ __('Logout') }}</span>
+                                <span>{{ __('message.logout') }}</span>
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
@@ -113,7 +113,12 @@
         </div>
         <script class="result-template" type="text/x-handlebars-template">
             <div class="ProfileCard u-cf">
-        <div class="ProfileCard-avatar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-airplay m-0"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path><polygon points="12 15 17 21 7 21 12 15"></polygon></svg></div>
+        <div class="ProfileCard-avatar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-airplay m-0">
+                <path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path>
+                <polygon points="12 15 17 21 7 21 12 15"></polygon>
+            </svg>
+        </div>
         <div class="ProfileCard-details">
         <div class="ProfileCard-realName">{{ Auth::user()->name }}</div>
         </div>

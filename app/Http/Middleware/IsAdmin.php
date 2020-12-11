@@ -19,10 +19,15 @@ class IsAdmin
     // }
     public function handle($request, Closure $next)
     {
-        if(auth()->user()->role == 1){
-            return $next($request);
+        if(auth()->user()){
+            if(auth()->user()->role == 1){
+                return $next($request);
+            }
+            return redirect('login')->with('error',"You don't have any access.");
+        }
+        else{
+            return redirect('login')->with('error',"You don't have any access.");
         }
    
-        return redirect('home')->with('error',"You don't have admin access.");
     }
 }
