@@ -105,13 +105,13 @@ class WebservicesController extends Controller
         else{
             $userData['profilePic'] = file_exists_in_folder('profile_pic',$user->profile_pic);
         }
-        $userData['isSocial'] = (string)$user->is_social ? $user->is_social : 0;
+        $userData['isSocial'] = (string)$user->is_social ? $user->is_social : "0";
         $userData['socialType'] = (string)$user->social_type ? $user->social_type : '';
         $userData['socialId'] = $user->social_id ? $user->social_id : '';
-        $userData['isEmailVerified'] = (string)$user->is_email_verified ? $user->is_email_verified : 0;
-        $userData['isPhoneVerified'] = (string)$user->is_phone_verified ? $user->is_phone_verified : 0;
+        $userData['isEmailVerified'] = (string)$user->is_email_verified ? $user->is_email_verified : "0";
+        $userData['isPhoneVerified'] = (string)$user->is_phone_verified ? $user->is_phone_verified : "0";
         $userData['deviceToken'] = $user->device_token ? $user->device_token : '';
-        $userData['deviceType'] = $user->device_type ? $user->device_type : 1;
+        $userData['deviceType'] = $user->device_type ? $user->device_type : "1";
         $userData['loginToken'] = $user->login_token ? $user->login_token : '';
         $userData['instagram'] = $user->instagram ? $user->instagram : '';
         $userData['snap'] = $user->snap ? $user->snap : '';
