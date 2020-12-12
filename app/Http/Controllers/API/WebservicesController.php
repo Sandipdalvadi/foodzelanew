@@ -94,22 +94,22 @@ class WebservicesController extends Controller
     }
     public function userDetailResponse($user = []){
         $userData=[];
-        $userData['id']=$user->id;
+        $userData['id']=(string)$user->id;
         $userData['name'] = $user->name ? $user->name : '';
         $userData['email'] = $user->email ? $user->email : '';
-        $userData['role'] = $user->role ? $user->role : '';
-        $userData['phone'] = $user->phone ? $user->phone : '';
+        $userData['role'] = (string)$user->role ? $user->role : '';
+        $userData['phone'] = (string)$user->phone ? $user->phone : '';
         if($user->profile_link == 1){
             $userData['profilePic'] = $user->profile_pic ? $user->profile_pic : '';
         }
         else{
             $userData['profilePic'] = file_exists_in_folder('profile_pic',$user->profile_pic);
         }
-        $userData['isSocial'] = $user->is_social ? $user->is_social : 0;
-        $userData['socialType'] = $user->social_type ? $user->social_type : '';
+        $userData['isSocial'] = (string)$user->is_social ? $user->is_social : 0;
+        $userData['socialType'] = (string)$user->social_type ? $user->social_type : '';
         $userData['socialId'] = $user->social_id ? $user->social_id : '';
-        $userData['isEmailVerified'] = $user->is_email_verified ? $user->is_email_verified : 0;
-        $userData['isPhoneVerified'] = $user->is_phone_verified ? $user->is_phone_verified : 0;
+        $userData['isEmailVerified'] = (string)$user->is_email_verified ? $user->is_email_verified : 0;
+        $userData['isPhoneVerified'] = (string)$user->is_phone_verified ? $user->is_phone_verified : 0;
         $userData['deviceToken'] = $user->device_token ? $user->device_token : '';
         $userData['deviceType'] = $user->device_type ? $user->device_type : 1;
         $userData['loginToken'] = $user->login_token ? $user->login_token : '';
