@@ -158,9 +158,9 @@ class WebservicesController extends Controller
                     echo json_encode($arr, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP);
                     exit;
                 } elseif (($post['isSocial'] == 0 && !Hash::check($post["password"], $user->password)) || ($post['isSocial'] == 1 && $user->is_social == 0)) {
-                    echo "<pre>";
-                    print_r($user);
-                    exit;
+                    // echo "<pre>";
+                    // print_r($user);
+                    // exit;
                     $arr = array('success' => 0, 'message' => 'Invalid email or password.');
                     echo json_encode($arr, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP);
                     exit;
