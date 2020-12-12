@@ -17,15 +17,15 @@ class WebservicesController extends Controller
         $post = json_decode($input, true);
         try {
             if((!isset($post['name'])) || (!isset($post['email'])) || (!isset($post['role'])) || (!isset($post['phone'])) || (!isset($post['isSocial'])) || (!isset($post['isEmailVerified']))
-            || (!isset($post['isPhoneVerified'])) || (!isset($post['deviceToken'])) || (!isset($post['deviceType'])) || (!isset($post['status'])) || 
-            ($post['name'] =="") || ($post['email'] =="") || ($post['role'] =="") ||  ($post['isSocial'] =="") || ($post['isEmailVerified'] =="") || 
-            ($post['isPhoneVerified'] =="") || ($post['deviceToken'] =="") || ($post['status'] ==""))
+            || (!isset($post['isPhoneVerified'])) || (!isset($post['deviceToken'])) || (!isset($post['deviceType'])) || (!isset($post['isActive'])) || 
+            ($post['name'] =="") || ($post['role'] =="") ||  ($post['isSocial'] =="") || ($post['isEmailVerified'] =="") || 
+            ($post['isPhoneVerified'] =="") || ($post['deviceToken'] =="") || ($post['isActive'] ==""))
             {
                 $response = array('success' => 0, 'message' => 'All Fields Are Required');
                 echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
                 exit;
             }
-            if(($post['isSocial'] == 0) && ((!isset($post['password']) || ($post['password'] =="") || ($post['phone'] =="")))){
+            if(($post['isSocial'] == 0) && ((!isset($post['password']) || ($post['password'] =="") || ($post['phone'] =="")) || ($post['email'] ==""))){
                 $response = array('success' => 0, 'message' => 'All Fields Are Required');
                 echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
                 exit;
@@ -36,7 +36,13 @@ class WebservicesController extends Controller
                 echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
                 exit;
             }
-            $checkEmail = User::where('email',$post['email'])->first();
+            $checkEmail = [];
+            if($post['email'] != ""){
+                $checkEmail = User::where('email',$post['email'])->first();
+            }
+            elseif($post['phone'] != ""){
+                $checkEmail = User::where('phone',$post['phone'])->first();
+            }
             if (!empty($checkEmail) && $post['isSocial'] == 0) {
                 $response = array('success' => 0, 'message' => 'This Email Already Exists');
                 echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
@@ -68,7 +74,7 @@ class WebservicesController extends Controller
             $newUser->is_phone_verified = $post['isPhoneVerified']; 
             $newUser->device_token = $post['deviceToken']; 
             $newUser->device_type = $post['deviceType']; 
-            $newUser->status = $post['status']; 
+            $newUser->status = $post['isActive']; 
             // $newUser->status = 1; 
             $newUser->save();
             $loginToken=substr(str_shuffle($newUser->id.'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') , 0 , 20);
@@ -91,7 +97,12 @@ class WebservicesController extends Controller
         $userData['email'] = $user->email ? $user->email : '';
         $userData['role'] = $user->role ? $user->role : '';
         $userData['phone'] = $user->phone ? $user->phone : '';
-        $userData['profilePic'] = $user->profile_pic ? $user->profile_pic : '';
+        if($user->profile_link == 1){
+            $userData['profilePic'] = $user->profile_pic ? $user->profile_pic : '';
+        }
+        else{
+            $userData['profilePic'] = file_exists_in_folder('profile_pic',$user->profile_pic);
+        }
         $userData['isSocial'] = $user->is_social ? $user->is_social : 0;
         $userData['socialType'] = $user->social_type ? $user->social_type : '';
         $userData['socialId'] = $user->social_id ? $user->social_id : '';
@@ -100,6 +111,9 @@ class WebservicesController extends Controller
         $userData['deviceToken'] = $user->device_token ? $user->device_token : '';
         $userData['deviceType'] = $user->device_type ? $user->device_type : 1;
         $userData['loginToken'] = $user->login_token ? $user->login_token : '';
+        $userData['instagram'] = $user->instagram ? $user->instagram : '';
+        $userData['snap'] = $user->snap ? $user->snap : '';
+        
         return $userData;
     } 
   
@@ -109,7 +123,7 @@ class WebservicesController extends Controller
         $post = json_decode($input, true);
         
         try {
-            if ((!isset($post['isSocial'])) || (!isset($post['email'])) || (!isset($post['deviceType'])) ||(!isset($post['deviceToken'])) || 
+            if ((!isset($post['isSocial'])) || (!isset($post['email'])) || (!isset($post['phone'])) || (!isset($post['deviceType'])) ||(!isset($post['deviceToken'])) || 
             ($post['isSocial'] == "") || ($post['email'] == "") || ($post['deviceType'] == "") ||($post['deviceToken'] == "")) {
                 $response = array('success' => 0, 'message' => 'All Fields Are Required');
                 echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
@@ -120,10 +134,14 @@ class WebservicesController extends Controller
                 echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
                 exit;
             }
-            
-            $user = User::where('email', $post['email'])->first();
+            if($post['email'] != ""){
+                $user = User::where('email', $post['email'])->first();
+            }
+            elseif($post['phone'] != ""){
+                $user = User::where('phone', $post['phone'])->first();
+            }
             if (empty($user)) {
-                $arr = array('success' => 0, 'message' => 'Invalid email or password.');
+                $arr = array('success' => 0, 'message' => 'Invalid email or phone or password.');
                 echo json_encode($arr, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP);
                 exit;
             } else {
