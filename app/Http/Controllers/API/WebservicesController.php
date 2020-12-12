@@ -16,26 +16,26 @@ class WebservicesController extends Controller
         $input = file_get_contents('php://input');
         $post = json_decode($input, true);
         try {
-            if((!isset($post['name'])) || (!isset($post['email'])) || (!isset($post['role'])) || (!isset($post['phone'])) || (!isset($post['isSocial'])) || (!isset($post['isEmailVerified']))
-            || (!isset($post['isPhoneVerified'])) || (!isset($post['deviceToken'])) || (!isset($post['deviceType'])) || (!isset($post['isActive'])) || 
-            ($post['name'] =="") || ($post['role'] =="") ||  ($post['isSocial'] =="") || ($post['isEmailVerified'] =="") || 
-            ($post['isPhoneVerified'] =="") || ($post['deviceToken'] =="") || ($post['isActive'] ==""))
-            {
-                $response = array('success' => 0, 'message' => 'All Fields Are Required');
-                echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
-                exit;
-            }
-            if(($post['isSocial'] == 0) && ((!isset($post['password']) || ($post['password'] =="") || ($post['phone'] =="")) || ($post['email'] ==""))){
-                $response = array('success' => 0, 'message' => 'All Fields Are Required');
-                echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
-                exit;
-            } 
-            elseif(($post['isSocial'] == 1) && ((!isset($post['socialType'])) || (!isset($post['socialId'])) || ($post['socialType'] =="") || ($post['socialId'] =="")))
-            {
-                $response = array('success' => 0, 'message' => 'All Fields Are Required');
-                echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
-                exit;
-            }
+            // if((!isset($post['name'])) || (!isset($post['email'])) || (!isset($post['role'])) || (!isset($post['phone'])) || (!isset($post['isSocial'])) || (!isset($post['isEmailVerified']))
+            // || (!isset($post['isPhoneVerified'])) || (!isset($post['deviceToken'])) || (!isset($post['deviceType'])) || (!isset($post['isActive'])) || (!isset($post['languageCode'])) || 
+            // ($post['name'] =="") || ($post['role'] =="") ||  ($post['isSocial'] =="") || ($post['isEmailVerified'] =="") || 
+            // ($post['isPhoneVerified'] =="") || ($post['deviceToken'] =="") || ($post['isActive'] =="")|| ($post['languageCode'] =="") )
+            // {
+            //     $response = array('success' => 0, 'message' => 'All Fields Are Required');
+            //     echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+            //     exit;
+            // }
+            // if(($post['isSocial'] == 0) && ((!isset($post['password']) || ($post['password'] =="") || ($post['phone'] =="")) || ($post['email'] ==""))){
+            //     $response = array('success' => 0, 'message' => 'All Fields Are Required');
+            //     echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+            //     exit;
+            // } 
+            // elseif(($post['isSocial'] == 1) && ((!isset($post['socialType'])) || (!isset($post['socialId'])) || ($post['socialType'] =="") || ($post['socialId'] =="")))
+            // {
+            //     $response = array('success' => 0, 'message' => 'All Fields Are Required');
+            //     echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+            //     exit;
+            // }
             $checkEmail = [];
             if($post['email'] != ""){
                 $checkEmail = User::where('email',$post['email'])->first();
@@ -75,6 +75,8 @@ class WebservicesController extends Controller
             $newUser->device_token = $post['deviceToken']; 
             $newUser->device_type = $post['deviceType']; 
             $newUser->status = $post['isActive']; 
+            $newUser->language_code = $post['languageCode']; 
+            
             // $newUser->status = 1; 
             $newUser->save();
             $loginToken=substr(str_shuffle($newUser->id.'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') , 0 , 20);
@@ -113,6 +115,7 @@ class WebservicesController extends Controller
         $userData['loginToken'] = $user->login_token ? $user->login_token : '';
         $userData['instagram'] = $user->instagram ? $user->instagram : '';
         $userData['snap'] = $user->snap ? $user->snap : '';
+        $userData['languageCode'] = $user->language_code ? $user->language_code : '';
         
         return $userData;
     } 
