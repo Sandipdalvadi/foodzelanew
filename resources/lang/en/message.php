@@ -28,4 +28,7 @@ return [
     'email' => 'Email',
     'profile_picture' => 'Profile Picture',
     'password' => 'Password',
+    'address' => 'Address',
+    'phone_number' => 'Phone Number',
+    
 ];

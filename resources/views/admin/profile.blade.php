@@ -42,7 +42,18 @@
                                             <input type="email" name="email" class="form-control"
                                                 value="{{ $user->email ? $user->email : '' }}" required>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="address">{{ __('message.address') }} <span style="color: red">*</span></label>
+                                            <input type="text" name="address" class="form-control"
+                                                value="{{ $user->address ? $user->address : '' }}" required>
+                                        </div>
 
+                                        <div class="form-group">
+                                            <label for="phone">{{ __('message.phone_number') }} <span style="color: red">*</span></label>
+                                            <input type="text" name="phone" class="form-control"
+                                                value="{{ $user->phone ? $user->phone : '' }}" required>
+                                        </div>
+                                        
                                         <div class="form-group">
                                             <label for="profile_pic">{{ __('message.profile_picture') }}</label>
                                             <input type="file" name="profile_pic" id="profile_pic" class="form-control">

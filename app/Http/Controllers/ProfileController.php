@@ -24,6 +24,9 @@ class ProfileController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            
         ]);
         
         if($validator->fails())
@@ -33,6 +36,8 @@ class ProfileController extends Controller
         $user = User::find(Auth::user()->id);
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->address = $request->address;
+        $user->phone = $request->phone;
         $request->password != "" ? $user->password = Hash::make($request->password) : '';
         if ($files = $request->file('profile_pic')) 
         {

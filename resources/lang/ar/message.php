@@ -28,4 +28,6 @@ return [
     'email' => 'البريد الإلكتروني',
     'profile_picture' => 'الصوره الشخصيه',
     'password' => 'كلمه السر',
+    'address' => 'عنوان',
+    'phone_number' => 'رقم الهاتف',
 ];
