@@ -30,5 +30,11 @@ return [
     'password' => 'Password',
     'address' => 'Address',
     'phone_number' => 'Phone Number',
+    'restaurent_owners' => 'Restaurent owners',
+    'users' => 'Users',
+    'categories' => 'Categories',
+    'foods' => 'Foods',
+    'orders' => 'Orders',  
+    'drivers' => 'Drivers',  
     
 ];

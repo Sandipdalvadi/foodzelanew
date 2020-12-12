@@ -30,4 +30,11 @@ return [
     'password' => 'كلمه السر',
     'address' => 'عنوان',
     'phone_number' => 'رقم الهاتف',
+    'restaurent_owners' => 'أصحاب المطاعم',
+    'users' => 'المستخدمون',
+    'categories' => 'التصنيفات',
+    'foods' => 'أغذية',
+    'orders' => 'طلب',
+    'drivers' => 'السائقين',  
+
 ];
