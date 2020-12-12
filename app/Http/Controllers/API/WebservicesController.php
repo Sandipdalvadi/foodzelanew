@@ -113,7 +113,7 @@ class WebservicesController extends Controller
         $userData['deviceToken'] = $user->device_token ? $user->device_token : '';
         $userData['deviceType'] = $user->device_type ? $user->device_type : "1";
         $userData['loginToken'] = $user->login_token ? $user->login_token : '';
-        $userData['instagram'] = $user->instagram ? $user->instagram : '';
+        $userData['instagram'] = $user->instagram ? $user->instagram : ''; 
         $userData['snap'] = $user->snap ? $user->snap : '';
         $userData['languageCode'] = $user->language_code ? $user->language_code : '';
         
