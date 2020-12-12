@@ -354,7 +354,7 @@ class WebservicesController extends Controller
         }
     }
 
-    public function phoneForgotPassword()
+    public function phoneResetPassword()
     {
         $input = file_get_contents('php://input');
         $post = json_decode($input, true);
