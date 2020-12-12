@@ -24,9 +24,16 @@
                 <a class="sidebar-link sidebar-title link-nav" href="{{route('admin.home')}}"><i data-feather="home"></i><span>{{ __('message.dashboard') }} </span>
                 </a> 
              </li>
-
              <li class="sidebar-list">
-               <a class="sidebar-link sidebar-title link-nav" href="{{route('admin.sitesetting.index')}}"><i data-feather="settings"></i><span>{{ __('message.sitesetting') }} </span>
+               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i data-feather="settings"></i><span>{{ __('message.categories') }} </span>
+               </a> 
+            </li>
+            <li class="sidebar-list">
+               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i data-feather="settings"></i><span>{{ __('message.foods') }} </span>
+               </a> 
+            </li>
+            <li class="sidebar-list">
+               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i data-feather="settings"></i><span>{{ __('message.orders') }} </span>
                </a> 
             </li>
             <li class="sidebar-list">
@@ -41,21 +48,12 @@
                <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i data-feather="settings"></i><span>{{ __('message.users') }} </span>
                </a> 
             </li>
-
-            <li class="sidebar-list">
-               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i data-feather="settings"></i><span>{{ __('message.categories') }} </span>
+            
+             <li class="sidebar-list">
+               <a class="sidebar-link sidebar-title link-nav" href="{{route('admin.sitesetting.index')}}"><i data-feather="settings"></i><span>{{ __('message.sitesetting') }} </span>
                </a> 
             </li>
 
-            <li class="sidebar-list">
-               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i data-feather="settings"></i><span>{{ __('message.foods') }} </span>
-               </a> 
-            </li>
-
-            <li class="sidebar-list">
-               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i data-feather="settings"></i><span>{{ __('message.orders') }} </span>
-               </a> 
-            </li>
             <li class="sidebar-list">
                <a class="sidebar-link sidebar-title link-nav" href="{{route('admin.terms_conditions.index')}}"><i data-feather="clipboard"></i><span>{{ __('message.terms_conditions') }} </span>
                </a> 
