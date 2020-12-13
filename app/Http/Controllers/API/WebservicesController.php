@@ -76,6 +76,9 @@ class WebservicesController extends Controller
             $newUser->device_type = $post['deviceType']; 
             $newUser->status = $post['isActive']; 
             $newUser->language_code = $post['languageCode']; 
+            $newUser->address = $post['address']; 
+            $newUser->latitude = $post['latitude']; 
+            $newUser->longitude = $post['longitude']; 
             
             // $newUser->status = 1; 
             $newUser->save();
@@ -116,6 +119,9 @@ class WebservicesController extends Controller
         $userData['instagram'] = $user->instagram ? $user->instagram : ''; 
         $userData['snap'] = $user->snap ? $user->snap : '';
         $userData['languageCode'] = $user->language_code ? $user->language_code : '';
+        $userData['address'] = $user->address ? $user->address : '';
+        $userData['latitude'] = $user->latitude ? $user->latitude : '';
+        $userData['longitude'] = $user->longitude ? $user->longitude : '';
         
         return $userData;
     } 
@@ -260,6 +266,9 @@ class WebservicesController extends Controller
             $userUpdate->name = $decode->name;
             $userUpdate->email = $decode->email;
             $userUpdate->phone = $decode->phone;
+            $userUpdate->address = $decode->address; 
+            $userUpdate->latitude = $decode->latitude; 
+            $userUpdate->longitude = $decode->longitude; 
             if($decode->password != ""){
                 $userUpdate->password = $decode->password;
             }
@@ -273,18 +282,7 @@ class WebservicesController extends Controller
                 $userUpdate->profile_pic = $picture;
             }
             $userUpdate->save();
-            $userData=[];
-            $userData['id']=$userUpdate->id;
-            $userData['name']=$userUpdate->name ? $userUpdate->name : '';
-            $userData['email']=$userUpdate->email ? $userUpdate->email : '';
-            $userData['phone']=$userUpdate->phone ?  $userUpdate->phone : '';
-            if($userUpdate->profile_link == 0){
-                $userData['profile_pic'] = $userUpdate->profile_pic != '' ? file_exists_in_folder('profile_pic', $userUpdate->profile_pic) : file_exists_in_folder('profile_pic', '');
-            }
-            else{
-                $userData['profile_pic'] = $userUpdate->profile_pic;
-            }
-            
+            $userData=$this->userDetailResponse($userUpdate);
             $response = array('success' => 1, 'message' => 'Profile Updated Succeessfully','result' => $userData);
             echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
             exit;
