@@ -35810,7 +35810,7 @@ body[class*='dark-'] .for-light {
 }
 
 .page-wrapper.compact-wrapper .page-body-wrapper.sidebar-icon .page-body {
-	min-height: calc(100vh - 80px);
+	min-height: calc(100vh - 132px);
 	margin-top: 80px;
 	margin-left: 280px;
 }
@@ -39914,3 +39914,20 @@ body[class*='dark-'] .for-light {
 /**=====================
     My Extra Style End
 ==========================**/
+
+
+
+
+.page-wrapper.compact-wrapper .page-body-wrapper.sidebar-icon div.sidebar-wrapper .sidebar-main .sidebar-links>li a i {
+    width: 18px;
+    margin-right: 5px;
+    vertical-align: bottom;
+    float: none;
+    stroke-width: 2.3px;
+    color: #2c323f;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    font-size: 23px;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper.sidebar-icon div.sidebar-wrapper .sidebar-main .sidebar-links>li:hover .sidebar-link:not(.active):hover i { color: var(--theme-deafult); }
+

@@ -258,8 +258,11 @@ class WebservicesController extends Controller
             }
             $userUpdate = User::find($decode->id);
             $userUpdate->name = $decode->name;
-            $userUpdate->email= $decode->email;
-            $userUpdate->phone= $decode->phone;
+            $userUpdate->email = $decode->email;
+            $userUpdate->phone = $decode->phone;
+            if($decode->password != ""){
+                $userUpdate->password = $decode->password;
+            }
             if (!empty($file)) {
                 $file = $request->file('profilePic');
                 $image_name = str_replace(' ', '-', $file->getClientOriginalName());

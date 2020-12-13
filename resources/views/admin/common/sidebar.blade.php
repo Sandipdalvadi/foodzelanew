@@ -25,27 +25,27 @@
                 </a> 
              </li>
              <li class="sidebar-list">
-               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i data-feather="settings"></i><span>{{ __('message.categories') }} </span>
+               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i data-feather="grid"></i><span>{{ __('message.categories') }} </span>
                </a> 
             </li>
             <li class="sidebar-list">
-               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i data-feather="settings"></i><span>{{ __('message.foods') }} </span>
+               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i class="icofont icofont-fast-food" aria-hidden="true"></i></i><span>{{ __('message.foods') }} </span>
                </a> 
             </li>
             <li class="sidebar-list">
-               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i data-feather="settings"></i><span>{{ __('message.orders') }} </span>
+               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i data-feather="file-text"></i><span>{{ __('message.orders') }} </span>
                </a> 
             </li>
             <li class="sidebar-list">
-               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i data-feather="settings"></i><span>{{ __('message.restaurent_owners') }} </span>
+               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i class="icofont icofont-user-suited"></i></i><span>{{ __('message.restaurent_owners') }} </span>
                </a> 
             </li>
             <li class="sidebar-list">
-               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i data-feather="settings"></i><span>{{ __('message.drivers') }} </span>
+               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i class="icofont icofont-hotel-boy-alt"></i><span>{{ __('message.drivers') }} </span>
                </a> 
             </li>
             <li class="sidebar-list">
-               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i data-feather="settings"></i><span>{{ __('message.users') }} </span>
+               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i data-feather="user"></i><span>{{ __('message.users') }} </span>
                </a> 
             </li>
             

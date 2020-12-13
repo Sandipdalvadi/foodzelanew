@@ -1,3 +1,8 @@
+<div class="loader-wrapper">
+    <div class="loader-box">
+        <div class="loader-7"></div>
+    </div>
+</div>
 <div class="page-header">
     <div class="header-wrapper row m-0">
         <form class="form-inline search-full" action="#" method="get">

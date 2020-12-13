@@ -112,8 +112,12 @@
     
 })(jQuery);
 
-$('.loader-wrapper').fadeOut('slow', function () {
-    $(this).remove();
+// $('.loader-wrapper').fadeOut('slow', function () {
+//     $(this).remove();
+// });
+$(window).on("load", function() {
+	// Animate loader off screen
+	$(".loader-wrapper").fadeOut("slow");;
 });
 
 $(window).on('scroll', function () {
