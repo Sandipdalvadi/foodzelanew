@@ -65,8 +65,8 @@
                                             alt="Image" width="150px" />
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-form-label " for="status">{{ __('message.status') }}</label>
-                                            <select class="js-example-basic-single" name="status">
+                                            <label for="status" class=" pt-0">{{ __('message.status') }}</label>
+                                            <select class="form-control js-example-basic-single" name="status">
                                                 <option value="1" @if($user->status == 1) selected @endif>{{ __('message.active') }}</option>
                                                 <option value="0" @if($user->status == 0) selected @endif>{{ __('message.in_active') }}</option>
                                             </select>
