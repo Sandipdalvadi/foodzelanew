@@ -5,6 +5,8 @@
     <meta name="description" content="Cuba admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
     @php
         $siteSettings = App\Models\SiteSettings::first();   
         $siteSettings = !empty($siteSettings) ? $siteSettings : new SiteSettings;
@@ -36,5 +38,9 @@
     <link id="color" rel="stylesheet" href="{{asset('/public/assets/css/color-1.css')}}" media="screen">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{asset('/public/assets/css/responsive.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('/public/assets/css/vendors/datatables.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('/public/assets/css/vendors/select2.css')}}">
+
     <script src="{{asset('public/assets/js/jquery-3.5.1.min.js')}}"></script>
+    
 </head>

@@ -30,9 +30,16 @@
 <!-- Theme js-->
 <script src="{{asset('public/assets/js/script.js')}}"></script>
 <script src="{{asset('public/assets/js/theme-customizer/customizer.js')}}"></script>
+
+<script src="{{asset('public/assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('public/assets/js/datatable/datatables/datatable.custom.js')}}"></script>
+
+<script src="{{asset('public/assets/js/select2/select2.full.min.js')}}"></script>
+<script src="{{asset('public/assets/js/select2/select2-custom.js')}}"></script>
 <!-- login js-->
 <!-- Plugin used-->
 <script src="{{ asset('public/assets/js/notify/bootstrap-notify.min.js') }}"></script>
+
 @if (Session::has('message'))
     <script type="text/javascript">
         $(function() {
@@ -50,3 +57,27 @@
     </script>
 
 @endif
+@foreach ($errors->all() as $error)
+    <script type="text/javascript">
+        $(function() {
+            notify("{{ $error }}", "danger", "bottom", "right")
+        });
+    </script>
+@endforeach
+<script>
+    function notify(message,type,from,align){		
+            $.notify({
+                // options
+                message: message 
+            },{
+                // settings
+                type: type,
+                placement: {
+                    from: from,
+                    align: align
+                }
+            });
+            
+        }
+    
+</script>

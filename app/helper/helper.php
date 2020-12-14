@@ -18,6 +18,9 @@
             elseif($directory == "profile_pic"){
                 return public_url().'/default_images/default_user.jpg';
             }
+            elseif($directory == "id_proof"){
+                return public_url().'/default_images/blank_image.jpeg';
+            }
         }
     }
     function old_file_remove($directory,$fileName){

@@ -7,7 +7,7 @@ return [
     'about_us' => 'About us',
     'terms_conditions' => 'Terms & conditions',
     'back' => 'Back',
-    'copyrighttext' => 'Copyright 2020 © Cuba theme by pixelstrap',  
+    'copyrighttext' => 'Copyright 2020 © foodzela',  
     'loading' => 'Loading...',
     'notitications' => 'Notitications',
     'edit_profile' => 'Edit Profile ',
@@ -36,5 +36,19 @@ return [
     'foods' => 'Foods',
     'orders' => 'Orders',  
     'drivers' => 'Drivers',  
+    'managers' => 'Managers',  
+    'image' => 'Image',  
+    'action' => 'Action',  
+    'id' => 'Id',  
+    'id_proof' => 'Photo ID Proof',
+    'cancel' => 'Cancel',
+    'add_manager' => 'Add Manager',
+    'in_active' => 'In Active',
+    'active' => 'Active',
+    'status' => 'Status',
+    'edit_manager' => 'Edit Manager',
+    
+    
+      
     
 ];

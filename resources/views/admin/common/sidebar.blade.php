@@ -37,6 +37,10 @@
                </a> 
             </li>
             <li class="sidebar-list">
+               <a class="sidebar-link sidebar-title link-nav" href="{{route('admin.managers.index')}}"><i data-feather="user"></i><span>{{ __('message.managers') }} </span>
+               </a> 
+            </li>
+            <li class="sidebar-list">
                <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i class="icofont icofont-user-suited"></i></i><span>{{ __('message.restaurent_owners') }} </span>
                </a> 
             </li>

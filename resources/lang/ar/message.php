@@ -36,5 +36,16 @@ return [
     'foods' => 'أغذية',
     'orders' => 'طلب',
     'drivers' => 'السائقين',  
-
+    'managers' => 'المديرين',  
+    'image' => 'صورة',  
+    'action' => 'عمل',  
+    'id' => 'هوية شخصية',  
+    'id_proof' => 'إثبات هوية الصورة',  
+    'cancel' => 'إلغاء',
+    'add_manager' => 'إضافة مدير',
+    'in_active' => 'غير نشط',
+    'active' => 'نشيط',
+    'status' => 'الحالة',
+    'edit_manager' => 'مدير التحرير',
+    
 ];

@@ -30,7 +30,19 @@ Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
         Session::put('locale', $locale);
         return redirect()->back();
     })->name('admin.lang');
-    
+
+    $paths = array(
+        'managers'   => 'ManagersController',
+    );
+
+    foreach($paths as $slug => $controller){
+        Route::get('/'.$slug.'/index', $controller.'@index')->name('admin.'.$slug.'.index');
+        Route::post('/'.$slug.'/list', $controller.'@list')->name('admin.'.$slug.'.list');
+        Route::delete('/'.$slug.'/delete/{id}', $controller.'@destroy')->name('admin.'.$slug.'.delete');
+        Route::get('/'.$slug.'/form/{id}', $controller.'@form')->name('admin.'.$slug.'.form');
+        Route::post('/'.$slug.'/store/', $controller.'@store')->name('admin.'.$slug.'.save');
+        Route::post('/'.$slug.'/alldeletes', $controller.'@alldeletes')->name('admin.'.$slug.'.alldelete');
+    }
     Route::get('sitesetting/index', 'SiteSettingController@index')->name('admin.sitesetting.index');
     Route::post('sitesetting/save', 'SiteSettingController@save')->name('admin.sitesetting.save');
     Route::get('terms_conditions/index', 'TermsConditionsController@index')->name('admin.terms_conditions.index');
