@@ -80,7 +80,7 @@ class ManagersController extends Controller
                 $name = $post->name ? $post->name : '-';
                 $phone = $post->phone ? $post->phone : '-';
                 $email = $post->email ? $post->email : '-';
-                $img= $post->image ? $post->image : '';
+                $img= $post->profile_pic ? $post->profile_pic : '';
                 $image = '<img style="width:90px;height:90px;" class="b-r-10" src="'.file_exists_in_folder('profile_pic', $img).'"alt="" />';
 
                 $data['checkdata']="<input type='checkbox' class='case' id='$post->id' name='case' value='$post->id'>";
