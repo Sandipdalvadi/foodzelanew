@@ -51,6 +51,8 @@ return [
     'add_permission' => 'Add permission',
     'edit_permission' => 'Edit permission',
     'url' => 'URL',
+    'full_url' => 'FULL URL',
+    
     
     
       

@@ -42,6 +42,10 @@
                                             <input class="form-control" id="url" type="text" placeholder="{{ __('message.url') }}" name="url" value="@if(old('url')){{old('url')}}@else{{$permissions->url ? $permissions->url : ''}}@endif">
                                         </div>
                                         <div class="form-group">
+                                            <label for="full_url">{{ __('message.full_url') }}</label>
+                                            <input class="form-control" id="full_url" type="text" placeholder="{{ __('message.full_url') }}" name="full_url" value="@if(old('full_url')){{old('full_url')}}@else{{$permissions->full_url ? $permissions->full_url : ''}}@endif">
+                                        </div>
+                                        <div class="form-group">
                                             <button class="btn btn-primary" type="submit">{{ __('message.submit') }}</button>
                                             <a href="{{route('admin.permissions.index')}}" class="btn btn-danger">{{ __('message.cancel') }}</a>
                                         </div>

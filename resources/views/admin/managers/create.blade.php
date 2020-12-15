@@ -65,11 +65,33 @@
                                             alt="Image" width="150px" />
                                         </div>
                                         <div class="form-group">
-                                            <label for="status" class=" pt-0">{{ __('message.status') }}</label>
+                                            <label for="status" class="col-form-label pt-0">{{ __('message.status') }}</label>
                                             <select class="form-control js-example-basic-single" name="status">
                                                 <option value="1" @if($user->status == 1) selected @endif>{{ __('message.active') }}</option>
                                                 <option value="0" @if($user->status == 0) selected @endif>{{ __('message.in_active') }}</option>
                                             </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="status" class="col-form-label pt-0">View Permissions<span style="color: red">*</span></label>
+                                            <div class="col-sm-10 row">
+                                                @php
+                                                    $userPermission = explode(",",$user->permissions);
+                                                @endphp
+                                                @foreach($permissions as $permission)
+                                                    <div class="col-sm-6">
+                                                        <div class="checkbox-fade fade-in-primary">
+                                                            <label>
+                                                                @if(in_array($permission->id,$userPermission))
+                                                                    <input type="checkbox" id="checkbox" checked="checked" name="permissions[]" value="{{$permission->id}}">
+                                                                @else
+                                                                    <input type="checkbox" id="checkbox"  name="permissions[]" value="{{$permission->id}}">
+                                                                @endif  
+                                                                <span>{{$permission->name}}</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <button class="btn btn-primary" type="submit">{{ __('message.submit') }}</button>

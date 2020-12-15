@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Models\Permissions;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -112,7 +113,8 @@ class ManagersController extends Controller
     public function form(Request $request)
     {   
         $manager = $request->id ? User::find($request->id) : new User ;  
-        return view('admin.managers.create',['user'=>$manager]);
+        $permissions= Permissions::all();
+        return view('admin.managers.create',['user'=>$manager,'permissions'=>$permissions]);
     }
 
     public function store(Request $request)
@@ -132,6 +134,7 @@ class ManagersController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
+        $user->permissions = $request->permissions ? implode(",",$request->permissions) : '';
         if($request->id == 0 || $request->password != '' )
         {
             $user->password = Hash::make($request->password);

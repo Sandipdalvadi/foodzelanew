@@ -26,6 +26,7 @@ class PermissionsController extends Controller
             1 =>'id', 
             2 =>'name',
             3 =>'url',
+            4 =>'full_url',
         );
         // permissions
   
@@ -43,7 +44,8 @@ class PermissionsController extends Controller
             $posts =  Permissions::where(function($q) use($search) {
                     $q->Where('id', 'LIKE',"%{$search}%")
                     ->orWhere('name', 'LIKE',"%{$search}%")
-                    ->orWhere('url', 'LIKE',"%{$search}%"); 
+                    ->orWhere('url', 'LIKE',"%{$search}%")
+                    ->orWhere('full_url', 'LIKE',"%{$search}%"); 
             })
             ->offset($start)
             ->limit($limit)
@@ -53,7 +55,8 @@ class PermissionsController extends Controller
             $totalFiltered = Permissions::where(function($q) use($search) {
                 $q->Where('id', 'LIKE',"%{$search}%")
                 ->orWhere('name', 'LIKE',"%{$search}%")
-                ->orWhere('url', 'LIKE',"%{$search}%"); 
+                ->orWhere('url', 'LIKE',"%{$search}%")
+                ->orWhere('full_url', 'LIKE',"%{$search}%"); 
             })
             ->count();
         }   
@@ -73,10 +76,12 @@ class PermissionsController extends Controller
             {
                 $name = $post->name ? $post->name : '-';
                 $url = $post->url ? $post->url : '-';
+                $fullUrl = $post->full_url ? $post->full_url : '-';
                 $data['checkdata']="<input type='checkbox' class='case' id='$post->id' name='case' value='$post->id'>";
                 $data['id'] = $post->id;
                 $data['name'] = $name;
                 $data['url'] = $url;
+                $data['full_url'] = $fullUrl;
                 
                 $data['action'] = "<a style='float:left;' href=".route('admin.permissions.form',['id'=>$post->id])." title='EDIT' class='btn btn-primary' ><i class='icofont icofont-ui-edit'></i></a>
                 <form style='float:left;margin-left:6px;' method='POST' action=".route('admin.permissions.delete',['id'=>$post->id]).">";
@@ -108,6 +113,7 @@ class PermissionsController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
             'url' => 'required|max:255',
+            'full_url' => 'required|max:255',
         ]);
 
         if($validator->fails())
@@ -117,6 +123,7 @@ class PermissionsController extends Controller
         $permissions = $request->id ? Permissions::findOrFail($request->id) : new Permissions;
         $permissions->name = $request->name;
         $permissions->url = $request->url;
+        $permissions->full_url = $request->full_url;
         $permissions->save();
 
         $message = $request->id ? "Permission Updated Successfully" :"New Permission Created Successfully";
