@@ -20,6 +20,7 @@ Auth::routes();
 Route::get('/ForgotPassword/{id}/{token}','HomeController@forgotPwd');
 Route::post('/passwordChange1','HomeController@passwordChange1')->name('passwordChange1');
 Route::get('/password_success','HomeController@password_success')->name('password_success');
+Route::get('logout', 'Auth\LoginController@logout');
 
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -33,6 +34,7 @@ Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
 
     $paths = array(
         'managers'   => 'ManagersController',
+        'permissions'   => 'PermissionsController',
     );
 
     foreach($paths as $slug => $controller){

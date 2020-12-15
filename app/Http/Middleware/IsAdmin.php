@@ -23,6 +23,11 @@ class IsAdmin
             if(auth()->user()->role == 1){
                 return $next($request);
             }
+            if(auth()->user()->role == 5){
+                // echo "Hello";
+                // exit;
+                return $next($request);
+            }
             return redirect('login')->with('error',"You don't have any access.");
         }
         else{

@@ -47,5 +47,6 @@ return [
     'active' => 'نشيط',
     'status' => 'الحالة',
     'edit_manager' => 'مدير التحرير',
+    'permissions' => 'أذونات',
     
 ];

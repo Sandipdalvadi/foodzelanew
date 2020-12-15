@@ -66,6 +66,10 @@
                <a class="sidebar-link sidebar-title link-nav" href="{{route('admin.about_us.index')}}"><i data-feather="users"></i><span>{{ __('message.about_us') }} </span>
                </a> 
             </li>
+            <li class="sidebar-list">
+               <a class="sidebar-link sidebar-title link-nav" href="{{route('admin.permissions.index')}}"><i data-feather="users"></i><span>{{ __('message.permissions') }} </span>
+               </a> 
+            </li>
             
             </ul>
        </div>

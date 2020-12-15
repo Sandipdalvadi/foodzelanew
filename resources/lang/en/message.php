@@ -47,6 +47,10 @@ return [
     'active' => 'Active',
     'status' => 'Status',
     'edit_manager' => 'Edit Manager',
+    'permissions' => 'Permissions',
+    'add_permission' => 'Add permission',
+    'edit_permission' => 'Edit permission',
+    'url' => 'URL',
     
     
       
