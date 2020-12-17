@@ -64,6 +64,12 @@
                </a> 
             </li>
             @endif
+            @if(auth()->user()->role == 1 || in_array('/admin/restaurents/index',$viewArray))
+            <li class="sidebar-list">
+               <a class="sidebar-link sidebar-title link-nav" href="{{ route('admin.restaurents.index') }}"><i class="icofont icofont-user-suited"></i></i><span>{{ __('message.restaurents') }} </span>
+               </a> 
+            </li>
+            @endif
             @if(auth()->user()->role == 1 || in_array('/admin/drivers/index',$viewArray))
             <li class="sidebar-list">
                <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i class="icofont icofont-hotel-boy-alt"></i><span>{{ __('message.drivers') }} </span>

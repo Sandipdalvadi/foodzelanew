@@ -19,8 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('register', 'API\WebservicesController@register');
 Route::post('login', 'API\WebservicesController@login');
 Route::post('forgotPassword', 'API\WebservicesController@forgotPassword');
-Route::post('changePassword', 'API\WebservicesController@changePassword');
-Route::post('editProfile', 'API\WebservicesController@editProfile');
-Route::post('getProfileDetails', 'API\WebservicesController@getProfileDetails');
+Route::post('changePassword', 'API\WebservicesController@changePassword')->middleware('api_row');
+Route::post('editProfile', 'API\WebservicesController@editProfile')->middleware('api_form');
+Route::post('getProfileDetails', 'API\WebservicesController@getProfileDetails')->middleware('api_row');
 Route::post('phoneResetPassword', 'API\WebservicesController@phoneResetPassword');
-Route::post('categoriesList', 'API\WebservicesController@categoriesList');
+Route::post('categoriesList', 'API\WebservicesController@categoriesList')->middleware('api_row');
+Route::post('addRestaurent', 'API\WebservicesController@addRestaurent')->middleware('api_form');

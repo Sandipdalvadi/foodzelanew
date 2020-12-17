@@ -24,6 +24,15 @@
             elseif($directory == "categories"){
                 return public_url().'/default_images/blank_image.jpeg';
             }
+            elseif($directory == "liceneseDelivery"){
+                return public_url().'/default_images/blank_image.jpeg';
+            }
+            elseif($directory == "certificationShop"){
+                return public_url().'/default_images/blank_image.jpeg';
+            }
+            elseif($directory == "ownerLogo"){
+                return public_url().'/default_images/blank_image.jpeg';
+            }
         }
     }
     function old_file_remove($directory,$fileName){

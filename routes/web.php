@@ -36,6 +36,8 @@ Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
         'managers'   => 'ManagersController',
         'permissions'   => 'PermissionsController',
         'categories'   => 'CategoriesController',
+        'restaurents'   => 'RestaurentsController',
+        
     );
 
     foreach($paths as $slug => $controller){
@@ -55,6 +57,7 @@ Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
     Route::post('about_us/save', 'AboutUsController@save')->name('admin.about_us.save');
     Route::get('profile/index', 'ProfileController@index')->name('admin.profile.index');
     Route::post('profile/save', 'ProfileController@save')->name('admin.profile.save');
+    Route::post('restaurents/listpending', 'RestaurentsController@listPending')->name('admin.restaurents.listPending');
     
     
 });

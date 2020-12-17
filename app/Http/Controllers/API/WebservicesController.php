@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Validator, DB, Hash, Auth, Carbon, Session, Lang, App, URL;
 use App\User;
+use App\Models\Restaurents;
 use App\Models\Categories;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
@@ -419,6 +420,70 @@ class WebservicesController extends Controller
             }
         }
         catch (Exception $e) {
+            $response = array('success' => 0, 'message' => $e->getMessage());
+            echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+            exit;
+        }
+    }
+
+    public function addRestaurent(Request $request)  //api edit profile
+    {
+        $post = $request->all();
+        $liceneseDelivery = $request->file('liceneseDelivery');
+        $certificationShop = $request->file('certificationShop');
+        $ownerLogo = $request->file('ownerLogo');
+        $decode = json_decode($post['json_content']);
+        try {
+            if ((!isset($decode->userId)) || (!isset($decode->name))) {
+                $response = array('success' => 0, 'message' => 'All Fields Are Required');
+                echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+                exit;
+            }
+            if ((empty($decode->userId)) || (empty($decode->name))) {
+                $response = array('success' => 0, 'message' => 'All Fields Are Required');
+                echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+                exit;
+            }
+            $restaurent = new Restaurents;
+            $restaurent->user_id = $decode->userId;
+            $restaurent->name = $decode->name;
+            $restaurent->status = 2;
+            $restaurent->is_deleted = 0;
+            if (!empty($liceneseDelivery)) {
+                $file = $liceneseDelivery;
+                $image_name = str_replace(' ', '-', $file->getClientOriginalName());
+                $picture = time() . "." . $image_name;
+                $destinationPath = public_path('liceneseDelivery/');
+                $file->move($destinationPath, $picture);
+                $restaurent->licenese_delivery = $picture;
+            }
+            if (!empty($certificationShop)) {
+                $file = $certificationShop;
+                $image_name = str_replace(' ', '-', $file->getClientOriginalName());
+                $picture = time() . "." . $image_name;
+                $destinationPath = public_path('certificationShop/');
+                $file->move($destinationPath, $picture);
+                $restaurent->certification_shop = $picture;
+            }
+            if (!empty($ownerLogo)) {
+                $file = $ownerLogo;
+                $image_name = str_replace(' ', '-', $file->getClientOriginalName());
+                $picture = time() . "." . $image_name;
+                $destinationPath = public_path('ownerLogo/');
+                $file->move($destinationPath, $picture);
+                $restaurent->owner_logo = $picture;
+            }
+            $restaurent->save();
+            $result['id'] = $restaurent->id;
+            $result['name'] = $restaurent->name ? $restaurent->name : '';
+            $result['liceneseDelivery'] = $restaurent->licenese_delivery ? file_exists_in_folder('liceneseDelivery', $restaurent->licenese_delivery)  : file_exists_in_folder('liceneseDelivery', '');
+            $result['certificationShop'] = $restaurent->certification_shop ? file_exists_in_folder('certificationShop', $restaurent->certification_shop)  : file_exists_in_folder('certificationShop', '');
+            $result['ownerLogo'] = $restaurent->owner_logo ? file_exists_in_folder('ownerLogo', $restaurent->owner_logo)  : file_exists_in_folder('ownerLogo', '');
+            
+            $response = array('success' => 1, 'message' => 'Restaurent Added Succeessfully','result' => $result);
+            echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+            exit;
+        } catch (Exception $e) {
             $response = array('success' => 0, 'message' => $e->getMessage());
             echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
             exit;

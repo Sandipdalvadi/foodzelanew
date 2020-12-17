@@ -55,6 +55,10 @@ return [
     'add_categories' => 'Add categories',
     'name_english' => 'English Name',
     'name_arabic' => 'English Arabic',
+    'restaurents' => 'Restaurents',
+    'license_delivery' => 'License Delivery',
+    'owner_logo' => 'Owner Log',
+    'certification_shop' => 'Certificate Shop',
     
     
     
