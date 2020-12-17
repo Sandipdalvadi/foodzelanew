@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Validator, DB, Hash, Auth, Carbon, Session, Lang, App, URL;
 use App\User;
+use App\Models\Categories;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -385,4 +386,42 @@ class WebservicesController extends Controller
             exit;
         }
     }
+
+    public function categoriesList()
+    {
+        $input = file_get_contents('php://input');
+        $post = json_decode($input, true);
+        
+        try {
+            $limit = isset($post['startLimit']) ? $post['startLimit'] : 0;
+            $categories = Categories::where('is_deleted',0)->where('status',1)->limit(10)->offset($limit)->orderBy('id', 'desc')->get();     
+            $totalCount = Categories::where('is_deleted',0)->where('status',1)->count();     
+            
+            if(count($categories))
+            {
+                $responses = [];
+                foreach($categories as $category)
+                {
+                    $response = [];
+                    $response['id'] = $category->id;
+                    $response['name'] = $category->name ? $category->name : '';
+                    $response['image'] = $category->image != '' ? file_exists_in_folder('categories', $category->image) : file_exists_in_folder('categories', '');
+                    $responses[] = $response;
+                }
+                $response = array('success' => 1 ,'message' => 'Category list loaded successfully.','totalCount'=>$totalCount, 'result' => $responses);
+                echo json_encode($response,JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);exit;
+            }
+            else
+            {
+                $response = array('success' => 0, 'message' => 'No category found');
+                 echo json_encode($response,JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);exit;
+            }
+        }
+        catch (Exception $e) {
+            $response = array('success' => 0, 'message' => $e->getMessage());
+            echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+            exit;
+        }
+    }
+    
 }

@@ -23,3 +23,4 @@ Route::post('changePassword', 'API\WebservicesController@changePassword');
 Route::post('editProfile', 'API\WebservicesController@editProfile');
 Route::post('getProfileDetails', 'API\WebservicesController@getProfileDetails');
 Route::post('phoneResetPassword', 'API\WebservicesController@phoneResetPassword');
+Route::post('categoriesList', 'API\WebservicesController@categoriesList');
