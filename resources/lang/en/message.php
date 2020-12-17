@@ -52,6 +52,7 @@ return [
     'edit_permission' => 'Edit permission',
     'url' => 'URL',
     'full_url' => 'FULL URL',
+    'add_categories' => 'Add categories',
     
     
     

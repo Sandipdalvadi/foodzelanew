@@ -6,10 +6,10 @@
             <div class="page-title">
                 <div class="row">
                     <div class="col-6">
-                        <h3>{{ __('message.managers') }}</h3>
+                        <h3>{{ __('message.categories') }}</h3>
                         <p>
-                            <a href="{{ route('admin.managers.form',['id'=>0])}}" class="btn btn-success"><i class="fa fa-edit" aria-hidden="true"></i>Add New </a>
-                            <a class="btn btn-danger deletesellected" onclick='multipleDelete("{{route("admin.managers.alldelete")}}")'> <i class="fa fa-trash" aria-hidden="true"></i>Delete </a>
+                            <a href="{{ route('admin.categories.form',['id'=>0])}}" class="btn btn-success"><i class="fa fa-edit" aria-hidden="true"></i>Add New </a>
+                            <a class="btn btn-danger deletesellected" onclick='multipleDelete("{{route("admin.categories.alldelete")}}")'> <i class="fa fa-trash" aria-hidden="true"></i>Delete </a>
                         </p>
                     </div>
                     <div class="col-6">
@@ -18,7 +18,7 @@
                                 <a href="{{route('admin.home')}}"> <i
                                         data-feather="home"></i></a>
                             </li>
-                            <li class="breadcrumb-item">{{ __('message.managers') }}</li>
+                            <li class="breadcrumb-item">{{ __('message.categories') }}</li>
                         </ol>
                     </div>
                 </div>
@@ -42,8 +42,6 @@
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="tabarticleid" rowspan="1" colspan="1" style="width: 100px;" aria-label="Id:activate to sort column ascending">{{ __('message.id') }}</th>
                                                     <th class="sorting" tabindex="0" aria-controls="tabarticleid" rowspan="1" colspan="1" style="width: 220px;" aria-label="company_name:activate to sort column ascending">{{ __('message.name') }}</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="tabarticleid" rowspan="1" colspan="1" style="width: 220px;" aria-label="company_name:activate to sort column ascending">{{ __('message.email') }}</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="tabarticleid" rowspan="1" colspan="1" style="width: 220px;" aria-label="company_name:activate to sort column ascending">{{ __('message.phone_number') }}</th>
                                                     <th class="sorting" tabindex="0" aria-controls="tabarticleid" rowspan="1" colspan="1" style="width: 220px;" aria-label="company_name:activate to sort column ascending">{{ __('message.image') }}</th>
                                                     <th class="sorting" tabindex="0" aria-controls="tabarticleid" rowspan="1" colspan="1" style="width: 220px;" aria-label="company_name:activate to sort column ascending">{{ __('message.status') }}</th>
                                                     <th  tabindex="0" aria-controls="tabarticleid" rowspan="1" colspan="1" style="width: 200px;" aria-label="Action:activate to sort column ascending">{{ __('message.action') }}</th>
@@ -68,7 +66,7 @@
                "serverSide": true,
                "rowId": 'Id',
                "ajax":{
-                    "url": "{{ route('admin.managers.list') }}",
+                    "url": "{{ route('admin.categories.list') }}",
                     "dataType": "json",
                     "type": "POST",
                     "data":{ _token: "{{csrf_token()}}"},
@@ -78,8 +76,6 @@
                     { "data": "checkdata","orderable":false,"bSortable": true, "className": "text-center" },
                     { "data": "id"},
                     { "data": "name"},
-                    { "data": "email"},
-                    { "data": "phone"},
                     { "data": "image"},
                     { "data": "status","orderable":false,"bSortable": true },
                     { "data": "action","orderable":false,"bSortable": true },                

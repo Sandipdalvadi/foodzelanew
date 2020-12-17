@@ -21,6 +21,9 @@
             elseif($directory == "id_proof"){
                 return public_url().'/default_images/blank_image.jpeg';
             }
+            elseif($directory == "categories"){
+                return public_url().'/default_images/blank_image.jpeg';
+            }
         }
     }
     function old_file_remove($directory,$fileName){

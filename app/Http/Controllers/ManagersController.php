@@ -29,6 +29,7 @@ class ManagersController extends Controller
             3 =>'email',
             4 =>'phone',
             5 =>'name',
+            5 =>'name',
         );
   
         $totalData = User::where('role',5)->where('is_deleted',0)->count();
@@ -91,12 +92,20 @@ class ManagersController extends Controller
                 $data['phone'] = $phone;
                 $data['email'] = $email;
                 
-                $data['action'] = "<a style='float:left;' href=".route('admin.managers.form',['id'=>$post->id])." title='EDIT' class='btn btn-primary' ><i class='icofont icofont-ui-edit'></i></a>
+                $data['status'] = "<label class='switch'><input type='checkbox' ";
+                if($post->status == 1){
+                    $data['status'] .= "checked";
+                }
+                $data['status'] .= " onchange=changeStatus(this,'".route('admin.managers.changeStatus',['id'=>$post->id])."')><span class='slider round'></span>
+                        </label>";
+                
+                
+                $data['action'] = "<div style='display: flex;'><a style='float:left;' href=".route('admin.managers.form',['id'=>$post->id])." title='EDIT' class='btn btn-primary' ><i class='icofont icofont-ui-edit'></i></a>
                 <form style='float:left;margin-left:6px;' method='POST' action=".route('admin.managers.delete',['id'=>$post->id]).">";
                
                 $data['action'] .=  csrf_field();
                 $data['action'] .= method_field("DELETE");
-                $data['action'] .=  "<button class='btn btn-danger'><i class='icofont icofont-ui-delete'></i></button></form>";
+                $data['action'] .=  "<button class='btn btn-danger'><i class='icofont icofont-ui-delete'></i></button></form></div>";
 
                 $data1[]=$data;
             }
@@ -167,7 +176,6 @@ class ManagersController extends Controller
     public function alldeletes(Request $request)
     {   
         $multiId = $request->id; 
-        
         foreach ($multiId as $singleId) 
         {
             $user = User::findOrFail($singleId);
@@ -175,4 +183,11 @@ class ManagersController extends Controller
             $user->save();
         }     
     }
+    public function changeStatus($id, Request $request)
+    {   
+        $user = User::findOrFail($id);
+        $user->status = $request->input('status');
+        $user->save();
+    }
+    
 }

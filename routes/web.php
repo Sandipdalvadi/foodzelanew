@@ -35,6 +35,7 @@ Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
     $paths = array(
         'managers'   => 'ManagersController',
         'permissions'   => 'PermissionsController',
+        'categories'   => 'CategoriesController',
     );
 
     foreach($paths as $slug => $controller){
@@ -44,6 +45,7 @@ Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
         Route::get('/'.$slug.'/form/{id}', $controller.'@form')->name('admin.'.$slug.'.form');
         Route::post('/'.$slug.'/store/', $controller.'@store')->name('admin.'.$slug.'.save');
         Route::post('/'.$slug.'/alldeletes', $controller.'@alldeletes')->name('admin.'.$slug.'.alldelete');
+        Route::get('/'.$slug.'/changeStatus/{id}', $controller.'@changeStatus')->name('admin.'.$slug.'.changeStatus');
     }
     Route::get('sitesetting/index', 'SiteSettingController@index')->name('admin.sitesetting.index');
     Route::post('sitesetting/save', 'SiteSettingController@save')->name('admin.sitesetting.save');

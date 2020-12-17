@@ -36,7 +36,7 @@
              @endif
              @if(auth()->user()->role == 1 || in_array('/admin/categories/index',$viewArray))
              <li class="sidebar-list">
-               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i data-feather="grid"></i><span>{{ __('message.categories') }} </span>
+               <a class="sidebar-link sidebar-title link-nav" href="{{ route('admin.categories.index') }}"><i data-feather="grid"></i><span>{{ __('message.categories') }} </span>
                </a> 
             </li>
             @endif
