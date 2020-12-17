@@ -25,9 +25,10 @@ class CategoriesController extends Controller
         $columns = array( 
             0 =>'id', 
             1 =>'id', 
-            2 =>'name',
-            3 =>'name',
-            4 =>'name'
+            2 =>'name_en',
+            3 =>'name_ar',
+            4 =>'name_en',
+            5 =>'name_ar'
         );
   
         $totalData = Categories::where('is_deleted',0)->count();
@@ -44,7 +45,8 @@ class CategoriesController extends Controller
             $posts =  Categories::where('is_deleted',0)
                 ->where(function($q) use($search) {
                     $q->Where('id', 'LIKE',"%{$search}%")
-                    ->orWhere('name', 'LIKE',"%{$search}%"); 
+                    ->orWhere('name_en', 'LIKE',"%{$search}%")
+                    ->orWhere('name_ar', 'LIKE',"%{$search}%"); 
             })
             ->offset($start)
             ->limit($limit)
@@ -54,7 +56,8 @@ class CategoriesController extends Controller
             $totalFiltered = Categories::where('is_deleted',0)
             ->where(function($q) use($search) {
                 $q->Where('id', 'LIKE',"%{$search}%")
-                ->orWhere('name', 'LIKE',"%{$search}%"); 
+                ->orWhere('name_en', 'LIKE',"%{$search}%")
+                ->orWhere('name_ar', 'LIKE',"%{$search}%"); 
             })
             ->count();
         }   
@@ -73,13 +76,15 @@ class CategoriesController extends Controller
         {
             foreach ($posts as $post) 
             {
-                $name = $post->name ? $post->name : '-';
+                $nameEn = $post->name_en ? $post->name_en : '-';
+                $nameAr = $post->name_ar ? $post->name_ar : '-';
                 $img= $post->image ? $post->image : '';
                 $image = '<img style="width:90px;height:90px;" class="b-r-10" src="'.file_exists_in_folder('categories', $img).'"alt="" />';
 
                 $data['checkdata']="<input type='checkbox' class='case' id='$post->id' name='case' value='$post->id'>";
                 $data['id'] = $post->id;
-                $data['name'] = $name;
+                $data['name_en'] = $nameEn;
+                $data['name_ar'] = $nameAr;
                 $data['image'] = $image;
                 $data['status'] = "<label class='switch'><input type='checkbox' ";
                 if($post->status == 1){
@@ -117,7 +122,8 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:255',
+            'name_en' => 'required|max:255',
+            'name_ar' => 'required|max:255',
         ]);
 
         if($validator->fails())
@@ -125,7 +131,8 @@ class CategoriesController extends Controller
             return redirect()->route('admin.categories.form',['id'=>$request->id])->withErrors($validator)->withInput();
         } 
         $categories = $request->id ? Categories::findOrFail($request->id) : new Categories;
-        $categories->name = $request->name;
+        $categories->name_en = $request->name_en;
+        $categories->name_ar = $request->name_ar;
         $categories->status = $request->status;
         if ($files = $request->file('image')) 
         {

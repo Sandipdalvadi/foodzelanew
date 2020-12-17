@@ -34,8 +34,12 @@
                                         @csrf
                                         <input class="form-control" type = "hidden" name="id" value="{{$categories->id ? $categories->id : 0 }}">
                                         <div class="form-group">
-                                            <label for="name">{{ __('message.name') }}</label>
-                                            <input class="form-control" id="name" type="text" placeholder="{{ __('message.name') }}" name="name" value="@if(old('name')){{old('name')}}@else{{ $categories->name ? $categories->name : ''}}@endif">
+                                            <label for="name">{{ __('message.name_english') }}</label>
+                                            <input class="form-control" id="name" type="text" placeholder="{{ __('message.name_english') }}" name="name_en" value="@if(old('name_en')){{old('name_en')}}@else{{ $categories->name_en ? $categories->name_en : ''}}@endif">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name_arabic">{{ __('message.name_arabic') }}</label>
+                                            <input class="form-control" id="name_arabic" type="text" placeholder="{{ __('message.name_arabic') }}" name="name_ar" value="@if(old('name_ar')){{old('name_ar')}}@else{{ $categories->name_ar ? $categories->name_ar : ''}}@endif">
                                         </div>
                                         <div class="form-group">
                                             <label class="col-form-label pt-0" for="image">{{ __('message.image') }}</label>

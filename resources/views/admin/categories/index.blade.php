@@ -41,7 +41,8 @@
                                                     <input type="checkbox" id="selectAll">
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="tabarticleid" rowspan="1" colspan="1" style="width: 100px;" aria-label="Id:activate to sort column ascending">{{ __('message.id') }}</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="tabarticleid" rowspan="1" colspan="1" style="width: 220px;" aria-label="company_name:activate to sort column ascending">{{ __('message.name') }}</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="tabarticleid" rowspan="1" colspan="1" style="width: 220px;" aria-label="company_name:activate to sort column ascending">{{ __('message.name_english') }}</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="tabarticleid" rowspan="1" colspan="1" style="width: 220px;" aria-label="company_name:activate to sort column ascending">{{ __('message.name_arabic') }}</th>
                                                     <th class="sorting" tabindex="0" aria-controls="tabarticleid" rowspan="1" colspan="1" style="width: 220px;" aria-label="company_name:activate to sort column ascending">{{ __('message.image') }}</th>
                                                     <th class="sorting" tabindex="0" aria-controls="tabarticleid" rowspan="1" colspan="1" style="width: 220px;" aria-label="company_name:activate to sort column ascending">{{ __('message.status') }}</th>
                                                     <th  tabindex="0" aria-controls="tabarticleid" rowspan="1" colspan="1" style="width: 200px;" aria-label="Action:activate to sort column ascending">{{ __('message.action') }}</th>
@@ -75,7 +76,8 @@
                 "columns": [
                     { "data": "checkdata","orderable":false,"bSortable": true, "className": "text-center" },
                     { "data": "id"},
-                    { "data": "name"},
+                    { "data": "name_en"},
+                    { "data": "name_ar"},
                     { "data": "image"},
                     { "data": "status","orderable":false,"bSortable": true },
                     { "data": "action","orderable":false,"bSortable": true },                

@@ -53,6 +53,8 @@ return [
     'url' => 'URL',
     'full_url' => 'FULL URL',
     'add_categories' => 'Add categories',
+    'name_english' => 'English Name',
+    'name_arabic' => 'English Arabic',
     
     
     

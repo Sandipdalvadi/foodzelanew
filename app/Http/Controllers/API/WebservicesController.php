@@ -404,7 +404,8 @@ class WebservicesController extends Controller
                 {
                     $response = [];
                     $response['id'] = $category->id;
-                    $response['name'] = $category->name ? $category->name : '';
+                    $response['name_en'] = $category->name_en ? $category->name_en : '';
+                    $response['name_ar'] = $category->name_ar ? $category->name_ar : '';
                     $response['image'] = $category->image != '' ? file_exists_in_folder('categories', $category->image) : file_exists_in_folder('categories', '');
                     $responses[] = $response;
                 }
