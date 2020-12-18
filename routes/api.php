@@ -23,5 +23,5 @@ Route::post('changePassword', 'API\WebservicesController@changePassword')->middl
 Route::post('editProfile', 'API\WebservicesController@editProfile')->middleware('api_form');
 Route::post('getProfileDetails', 'API\WebservicesController@getProfileDetails')->middleware('api_row');
 Route::post('phoneResetPassword', 'API\WebservicesController@phoneResetPassword');
-Route::post('categoriesList', 'API\WebservicesController@categoriesList')->middleware('api_row');
+Route::post('categoriesList', 'API\WebservicesController@categoriesList');
 Route::post('addRestaurent', 'API\WebservicesController@addRestaurent')->middleware('api_form');
