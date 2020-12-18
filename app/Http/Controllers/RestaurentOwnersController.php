@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Restaurents;
+use App\User;
+use App\Models\Permissions;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -11,12 +12,12 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Auth, Hash, DB, Lang, URL;
 
-class RestaurentsController extends Controller
+class RestaurentOwnersController extends Controller
 {
     public function index()
     { 
 
-        return view('admin.restaurents.index');
+        return view('admin.restaurent_owners.index');
     }
 
     public function list(Request $request)
@@ -25,62 +26,63 @@ class RestaurentsController extends Controller
             0 =>'id', 
             1 =>'id', 
             2 =>'name',
-            3 =>'name',
-            4 =>'name',
+            3 =>'email',
+            4 =>'phone',
             5 =>'name',
             6 =>'name',
         );
-  
         $status = $request->input('status');
-        $totalData = Restaurents::where('is_deleted',0);
+        $totalData = User::where('role',2)->where('is_deleted',0);
         if($status == 3){
             $totalData = $totalData->count();
         }
         else{
             $totalData = $totalData->where('status',$status)->count();
         }
-
         $totalFiltered = $totalData; 
         $limit = $request->request->get('length');
         $start = $request->request->get('start');
         $order = $columns[$request->input('order.0.column')];
         $dir = $request->input('order.0.dir');
 
-
         if(!empty($request->input('search.value')))
         {            
             $search = $request->input('search.value'); 
 
-            $posts =  Restaurents::where('is_deleted',0);
-            if($status != 3){
-                $posts = $posts->where('status',$status);
-            }
-            $posts = $posts->where(function($q) use($search) {
-                $q->Where('id', 'LIKE',"%{$search}%")
-                ->orWhere('name', 'LIKE',"%{$search}%"); 
+            $posts =  User::where('role',2)->where('is_deleted',0);
+                if($status != 3){
+                    $posts = $posts->where('status',$status);
+                }
+                $posts = $posts->where(function($q) use($search) {
+                    $q->Where('id', 'LIKE',"%{$search}%")
+                    ->orWhere('name', 'LIKE',"%{$search}%")
+                    ->orWhere('email', 'LIKE',"%{$search}%")
+                    ->orWhere('phone', 'LIKE',"%{$search}%"); 
             })
             ->offset($start)
             ->limit($limit)
             ->orderBy($order,$dir)
             ->get();
 
-            $totalFiltered = Restaurents::where('is_deleted',0);
+            $totalFiltered = User::where('role',2)->where('is_deleted',0);
             if($status != 3){
                 $totalFiltered = $totalFiltered->where('status',$status);
             }
             $totalFiltered = $totalFiltered->where(function($q) use($search) {
                 $q->Where('id', 'LIKE',"%{$search}%")
-                ->orWhere('name', 'LIKE',"%{$search}%"); 
+                ->orWhere('name', 'LIKE',"%{$search}%")
+                ->orWhere('email', 'LIKE',"%{$search}%")
+                ->orWhere('phone', 'LIKE',"%{$search}%"); 
             })
             ->count();
         }   
         else
         {            
-            $posts = Restaurents::where('is_deleted',0);
-                if($status != 3){
-                    $posts = $posts->where('status',$status);
-                }
-                $posts = $posts->offset($start)
+            $posts = User::where('role',2)->where('is_deleted',0);
+            if($status != 3){
+                $posts = $posts->where('status',$status);
+            }
+            $posts = $posts->offset($start)
                     ->limit($limit)
                     ->orderBy($order,$dir)
                     ->get();
@@ -92,28 +94,32 @@ class RestaurentsController extends Controller
         {
             foreach ($posts as $post) 
             {
-                $name = $post->name ? $post->name : '';
+                $name = $post->name ? $post->name : '-';
+                $phone = $post->phone ? $post->phone : '-';
+                $email = $post->email ? $post->email : '-';
+                $img= $post->profile_pic ? $post->profile_pic : '';
                 $status0 = $status1 = $status2 = "";
                 $status0 = $post->status == 0 ? 'selected' : ''; 
                 $status1 = $post->status == 1 ? 'selected' : ''; 
                 $status2 = $post->status == 2 ? 'selected' : ''; 
-                $liceneseDelivery = '<img style="width:90px;height:90px;" class="b-r-10" src="'.file_exists_in_folder('liceneseDelivery', $post->licenese_delivery).'" alt="" />';
-                $certificationShop = '<img style="width:90px;height:90px;" class="b-r-10" src="'.file_exists_in_folder('certificationShop', $post->certification_shop).'" alt="" />';
-                $ownerLogo = '<img style="width:90px;height:90px;" class="b-r-10" src="'.file_exists_in_folder('ownerLogo', $post->owner_logo).'" alt="" />';
                 
+                $image = '<img style="width:90px;height:90px;" class="b-r-10" src="'.file_exists_in_folder('profile_pic', $img).'"alt="" />';
+
                 $data['checkdata']="<input type='checkbox' class='case' id='$post->id' name='case' value='$post->id'>";
                 $data['id'] = $post->id;
                 $data['name'] = $name;
-                $data['licenese_delivery'] = $liceneseDelivery;
-                $data['certification_shop'] = $certificationShop;
-                $data['owner_logo'] = $ownerLogo;
-                $data['status'] = "<select class='js-example-basic-single form-control' onchange=changeStatus(this,'".route('admin.restaurents.changeStatus',['id'=>$post->id])."')>
+                $data['image'] = $image;
+                $data['phone'] = $phone;
+                $data['email'] = $email;
+                
+                $data['status'] = "<select class='js-example-basic-single form-control' onchange=changeStatus(this,'".route('admin.restaurent_owners.changeStatus',['id'=>$post->id])."')>
                 <option value='0' ".$status0.">In Active</option>
                 <option value='1' ".$status1.">Active</option>
                 <option value='2' ".$status2.">Pending</option></select>";
                 
+                
                 $data['action'] = "<div style='display: flex;'>
-                <form style='float:left;margin-left:6px;' method='POST' action=".route('admin.restaurents.delete',['id'=>$post->id]).">";
+                <form style='float:left;margin-left:6px;' method='POST' action=".route('admin.restaurent_owners.delete',['id'=>$post->id]).">";
                
                 $data['action'] .=  csrf_field();
                 $data['action'] .= method_field("DELETE");
@@ -130,14 +136,13 @@ class RestaurentsController extends Controller
         );
         echo json_encode($json_data); 
     }
-
+    
     public function destroy($id)
     {   
-        $restaurents = Restaurents::findOrFail($id);
-        $restaurents->is_deleted = 1;
-        $restaurents->save();
-        return redirect()->route('admin.restaurents.index')->with('message',"Restaurents Deleted Successfully");
-      
+        $user = User::findOrFail($id);
+        $user->is_deleted = 1;
+        $user->save();
+        return redirect()->route('admin.restaurent_owners.index')->with('message',"User Deleted Successfully"); 
     }
 
     public function alldeletes(Request $request)
@@ -145,15 +150,15 @@ class RestaurentsController extends Controller
         $multiId = $request->id; 
         foreach ($multiId as $singleId) 
         {
-            $restaurents = Restaurents::findOrFail($singleId);
-            $restaurents->is_deleted = 1;
-            $restaurents->save();
+            $user = User::findOrFail($singleId);
+            $user->is_deleted = 1;
+            $user->save();
         }     
     }
     public function changeStatus($id, Request $request)
     {   
-        $restaurents = Restaurents::findOrFail($id);
-        $restaurents->status = $request->input('status');
-        $restaurents->save();
-    }
+        $user = User::findOrFail($id);
+        $user->status = $request->input('status');
+        $user->save();
+    }   
 }

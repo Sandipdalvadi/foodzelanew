@@ -60,7 +60,7 @@
             @endif
             @if(auth()->user()->role == 1 || in_array('/admin/restaurent_owners/index',$viewArray))
             <li class="sidebar-list">
-               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i class="icofont icofont-user-suited"></i></i><span>{{ __('message.restaurent_owners') }} </span>
+               <a class="sidebar-link sidebar-title link-nav" href="{{ route('admin.restaurent_owners.index') }}"><i class="icofont icofont-user-suited"></i></i><span>{{ __('message.restaurent_owners') }} </span>
                </a> 
             </li>
             @endif
