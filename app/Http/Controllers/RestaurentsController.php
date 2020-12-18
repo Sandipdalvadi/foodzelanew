@@ -95,6 +95,10 @@ class RestaurentsController extends Controller
             foreach ($posts as $post) 
             {
                 $name = $post->name ? $post->name : '';
+                $status0 = $status1 = $status2 = "";
+                $status0 = $post->status == 0 ? 'selected' : ''; 
+                $status1 = $post->status == 1 ? 'selected' : ''; 
+                $status2 = $post->status == 2 ? 'selected' : ''; 
                 $liceneseDelivery = '<img style="width:90px;height:90px;" class="b-r-10" src="'.file_exists_in_folder('liceneseDelivery', $post->licenese_delivery).'" alt="" />';
                 $certificationShop = '<img style="width:90px;height:90px;" class="b-r-10" src="'.file_exists_in_folder('certificationShop', $post->certification_shop).'" alt="" />';
                 $ownerLogo = '<img style="width:90px;height:90px;" class="b-r-10" src="'.file_exists_in_folder('ownerLogo', $post->owner_logo).'" alt="" />';
@@ -105,10 +109,10 @@ class RestaurentsController extends Controller
                 $data['licenese_delivery'] = $liceneseDelivery;
                 $data['certification_shop'] = $certificationShop;
                 $data['owner_logo'] = $ownerLogo;
-                $data['status'] = "<select class='select2 form-control' onchange=changeStatus(this,'".route('admin.restaurents.changeStatus',['id'=>$post->id])."')>
-                <option value='0'>In Active</option>
-                <option value='1'>Active</option>
-                <option value='2'>Pending</option>";
+                $data['status'] = "<select class='js-example-basic-single form-control' onchange=changeStatus(this,'".route('admin.restaurents.changeStatus',['id'=>$post->id])."')>
+                <option value='0' ".$status0.">In Active</option>
+                <option value='1' ".$status1.">Active</option>
+                <option value='2' ".$status2.">Pending</option></select>";
                 // $data['status'] = "<label class='switch'><input type='checkbox' ";
                 // if($post->status == 1){
                 //     $data['status'] .= "checked";

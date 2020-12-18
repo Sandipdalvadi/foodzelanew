@@ -99,14 +99,11 @@
                });
         }
         function changeStatus(objs,urls){
-            var dataValue = 0;
-            if ($(objs).prop('checked')==true){ 
-                var dataValue = 1;
-            }
+            
             jQuery.ajax({
                 type: "get",
                 url: urls,
-                data: {'status':dataValue},
+                data: {'status':objs.value},
                 success: function(resultData){
                         
                 }
