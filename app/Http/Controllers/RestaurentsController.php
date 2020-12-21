@@ -97,9 +97,9 @@ class RestaurentsController extends Controller
                 $status0 = $post->status == 0 ? 'selected' : ''; 
                 $status1 = $post->status == 1 ? 'selected' : ''; 
                 $status2 = $post->status == 2 ? 'selected' : ''; 
-                $liceneseDelivery = '<img style="width:90px;height:90px;" class="b-r-10" src="'.file_exists_in_folder('liceneseDelivery', $post->licenese_delivery).'" alt="" />';
-                $certificationShop = '<img style="width:90px;height:90px;" class="b-r-10" src="'.file_exists_in_folder('certificationShop', $post->certification_shop).'" alt="" />';
-                $ownerLogo = '<img style="width:90px;height:90px;" class="b-r-10" src="'.file_exists_in_folder('ownerLogo', $post->owner_logo).'" alt="" />';
+                $liceneseDelivery = '<img style="width:50px;height:50px;" class="b-r-10" src="'.file_exists_in_folder('liceneseDelivery', $post->licenese_delivery).'" alt="" />';
+                $certificationShop = '<img style="width:50px;height:50px;" class="b-r-10" src="'.file_exists_in_folder('certificationShop', $post->certification_shop).'" alt="" />';
+                $ownerLogo = '<img style="width:50px;height:50px;" class="b-r-10" src="'.file_exists_in_folder('ownerLogo', $post->owner_logo).'" alt="" />';
                 
                 $data['checkdata']="<input type='checkbox' class='case' id='$post->id' name='case' value='$post->id'>";
                 $data['id'] = $post->id;

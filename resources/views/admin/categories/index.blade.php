@@ -9,7 +9,7 @@
                         <h3>{{ __('message.categories') }}</h3>
                         <p>
                             <a href="{{ route('admin.categories.form',['id'=>0])}}" class="btn btn-success"><i class="fa fa-edit" aria-hidden="true"></i>Add New </a>
-                            <a class="btn btn-danger deletesellected" onclick='multipleDelete("{{route("admin.categories.alldelete")}}")'> <i class="fa fa-trash" aria-hidden="true"></i>Delete </a>
+                            <a style="color: white" class="btn btn-danger deletesellected" onclick='multipleDelete("{{route("admin.categories.alldelete")}}")'> <i class="fa fa-trash" aria-hidden="true"></i>Delete </a>
                         </p>
                     </div>
                     <div class="col-6">

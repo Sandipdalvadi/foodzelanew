@@ -72,13 +72,13 @@
             @endif
             @if(auth()->user()->role == 1 || in_array('/admin/drivers/index',$viewArray))
             <li class="sidebar-list">
-               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i class="icofont icofont-hotel-boy-alt"></i><span>{{ __('message.drivers') }} </span>
+               <a class="sidebar-link sidebar-title link-nav" href="{{ route('admin.drivers.index') }}"><i class="icofont icofont-hotel-boy-alt"></i><span>{{ __('message.drivers') }} </span>
                </a> 
             </li>
             @endif
             @if(auth()->user()->role == 1 || in_array('/admin/users/index',$viewArray))
             <li class="sidebar-list">
-               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i data-feather="user"></i><span>{{ __('message.users') }} </span>
+               <a class="sidebar-link sidebar-title link-nav" href="{{ route('admin.users.index') }}"><i data-feather="user"></i><span>{{ __('message.users') }} </span>
                </a> 
             </li>
             @endif

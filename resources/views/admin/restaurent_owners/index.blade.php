@@ -8,7 +8,7 @@
                     <div class="col-6">
                         <h3>{{ __('message.restaurent_owners') }}</h3>
                         <p>
-                            <a class="btn btn-danger deletesellected" onclick='multipleDelete("{{route("admin.restaurent_owners.alldelete")}}")'> <i class="fa fa-trash" aria-hidden="true"></i>Delete </a>
+                            <a style="color: white" class="btn btn-danger deletesellected" onclick='multipleDelete("{{route("admin.restaurent_owners.alldelete")}}")'> <i class="fa fa-trash" aria-hidden="true"></i>Delete </a>
                         </p>
                     </div>
                     <div class="col-6">
@@ -34,7 +34,7 @@
                                     <div id="tabarticleid_wrapper" class="dataTables_wrapper no-footer">
                      
                                         <table id="example" class="display nowrap" style="width:100%" role="grid" aria-describedby="tabarticleid_info" style="width: 100%px;">
-                                            <div class="col-md-3">
+                                            <div class="col-md-3" style="margin-bottom: 10px;">
                                                 <select class="form-control js-example-basic-single" onchange="restaurentODatatable()" name="status" id="selectStatus">
                                                     <option value="3">All</option>
                                                     <option value="2">Pening</option>

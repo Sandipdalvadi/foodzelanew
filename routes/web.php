@@ -38,6 +38,8 @@ Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
         'categories'   => 'CategoriesController',
         'restaurents'   => 'RestaurentsController',
         'restaurent_owners'   => 'RestaurentOwnersController',
+        'drivers'   => 'DriversController',
+        'users'   => 'UsersController',
         
     );
 
