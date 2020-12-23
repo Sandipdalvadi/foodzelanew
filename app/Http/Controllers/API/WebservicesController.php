@@ -132,6 +132,7 @@ class WebservicesController extends Controller
             if($ownerDetail){
                 $userData['liceneseDelivery'] = $ownerDetail->licenese_delivery ? file_exists_in_folder('liceneseDelivery', $ownerDetail->licenese_delivery)  : file_exists_in_folder('liceneseDelivery', '');
                 $userData['certificationShop'] = $ownerDetail->certification_shop ? file_exists_in_folder('certificationShop', $ownerDetail->certification_shop)  : file_exists_in_folder('certificationShop', '');
+                $userData['idProof'] = $ownerDetail->id_proof ? file_exists_in_folder('idProof', $ownerDetail->id_proof)  : file_exists_in_folder('idProof', '');
             }
         }
         return $userData;
@@ -502,6 +503,12 @@ class WebservicesController extends Controller
                 echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
                 exit;
             }
+            if(empty($idProof)){
+                $response = array('success' => 0, 'message' => 'Id Proof Required');
+                echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+                exit;
+            }
+            
             $restaurentsOwnerDetail = new RestaurentsOwnerDetail;
             $restaurentsOwnerDetail->restaurent_owner_id = $decode->restaurentOwnerId;
             if (!empty($liceneseDelivery)) {
@@ -520,6 +527,15 @@ class WebservicesController extends Controller
                 $file->move($destinationPath, $picture);
                 $restaurentsOwnerDetail->certification_shop = $picture;
             }
+            if (!empty($idProof)) {
+                $file = $idProof;
+                $image_name = str_replace(' ', '-', $file->getClientOriginalName());
+                $picture = time() . "." . $image_name;
+                $destinationPath = public_path('idProof/');
+                $file->move($destinationPath, $picture);
+                $restaurentsOwnerDetail->id_proof = $picture;
+            }
+            
             $restaurentsOwnerDetail->is_document_verified = 1;
             $restaurentsOwnerDetail->save();
             $user = User::with('hasOneRestaurentsOwnerDetail')->find($restaurentsOwnerDetail->restaurent_owner_id);
