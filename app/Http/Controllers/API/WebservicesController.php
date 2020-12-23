@@ -6,6 +6,8 @@ use Validator, DB, Hash, Auth, Carbon, Session, Lang, App, URL;
 use App\User;
 use App\Models\Restaurents;
 use App\Models\Categories;
+use App\Models\RestaurentsOwnerDetail;
+use App\Models\SiteSettings;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -124,7 +126,14 @@ class WebservicesController extends Controller
         $userData['address'] = $user->address ? $user->address : '';
         $userData['latitude'] = $user->latitude ? $user->latitude : '';
         $userData['longitude'] = $user->longitude ? $user->longitude : '';
-        
+        if($user->role == 2){
+            $ownerDetail = $user->hasOneRestaurentsOwnerDetail ? $user->hasOneRestaurentsOwnerDetail : [];
+            $userData['is_document_verified'] = $ownerDetail ? $ownerDetail->is_document_verified : 0;
+            if($ownerDetail){
+                $userData['liceneseDelivery'] = $ownerDetail->licenese_delivery ? file_exists_in_folder('liceneseDelivery', $ownerDetail->licenese_delivery)  : file_exists_in_folder('liceneseDelivery', '');
+                $userData['certificationShop'] = $ownerDetail->certification_shop ? file_exists_in_folder('certificationShop', $ownerDetail->certification_shop)  : file_exists_in_folder('certificationShop', '');
+            }
+        }
         return $userData;
     } 
   
@@ -429,8 +438,6 @@ class WebservicesController extends Controller
     public function addRestaurent(Request $request)  //api edit profile
     {
         $post = $request->all();
-        $liceneseDelivery = $request->file('liceneseDelivery');
-        $certificationShop = $request->file('certificationShop');
         $ownerLogo = $request->file('ownerLogo');
         $decode = json_decode($post['json_content']);
         try {
@@ -449,22 +456,6 @@ class WebservicesController extends Controller
             $restaurent->name = $decode->name;
             $restaurent->status = 2;
             $restaurent->is_deleted = 0;
-            if (!empty($liceneseDelivery)) {
-                $file = $liceneseDelivery;
-                $image_name = str_replace(' ', '-', $file->getClientOriginalName());
-                $picture = time() . "." . $image_name;
-                $destinationPath = public_path('liceneseDelivery/');
-                $file->move($destinationPath, $picture);
-                $restaurent->licenese_delivery = $picture;
-            }
-            if (!empty($certificationShop)) {
-                $file = $certificationShop;
-                $image_name = str_replace(' ', '-', $file->getClientOriginalName());
-                $picture = time() . "." . $image_name;
-                $destinationPath = public_path('certificationShop/');
-                $file->move($destinationPath, $picture);
-                $restaurent->certification_shop = $picture;
-            }
             if (!empty($ownerLogo)) {
                 $file = $ownerLogo;
                 $image_name = str_replace(' ', '-', $file->getClientOriginalName());
@@ -476,8 +467,6 @@ class WebservicesController extends Controller
             $restaurent->save();
             $result['id'] = $restaurent->id;
             $result['name'] = $restaurent->name ? $restaurent->name : '';
-            $result['liceneseDelivery'] = $restaurent->licenese_delivery ? file_exists_in_folder('liceneseDelivery', $restaurent->licenese_delivery)  : file_exists_in_folder('liceneseDelivery', '');
-            $result['certificationShop'] = $restaurent->certification_shop ? file_exists_in_folder('certificationShop', $restaurent->certification_shop)  : file_exists_in_folder('certificationShop', '');
             $result['ownerLogo'] = $restaurent->owner_logo ? file_exists_in_folder('ownerLogo', $restaurent->owner_logo)  : file_exists_in_folder('ownerLogo', '');
             
             $response = array('success' => 1, 'message' => 'Restaurent Added Succeessfully','result' => $result);
@@ -489,5 +478,99 @@ class WebservicesController extends Controller
             exit;
         }
     }
-    
+
+    public function restaurentOwnerDocVerified(Request $request)  //api edit profile
+    {
+        $post = $request->all();
+        $liceneseDelivery = $request->file('liceneseDelivery');
+        $certificationShop = $request->file('certificationShop');
+        $idProof = $request->file('idProof');
+        $decode = json_decode($post['json_content']);
+        try {
+            if ((!isset($decode->restaurentOwnerId)) || (empty($decode->restaurentOwnerId))) {
+                $response = array('success' => 0, 'message' => 'All Fields Are Required');
+                echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+                exit;
+            }
+            if(empty($liceneseDelivery)){
+                $response = array('success' => 0, 'message' => 'Licence is Required');
+                echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+                exit;
+            }
+            if(empty($certificationShop)){
+                $response = array('success' => 0, 'message' => 'Shop certificate Required');
+                echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+                exit;
+            }
+            $restaurentsOwnerDetail = new RestaurentsOwnerDetail;
+            $restaurentsOwnerDetail->restaurent_owner_id = $decode->restaurentOwnerId;
+            if (!empty($liceneseDelivery)) {
+                $file = $liceneseDelivery;
+                $image_name = str_replace(' ', '-', $file->getClientOriginalName());
+                $picture = time() . "." . $image_name;
+                $destinationPath = public_path('liceneseDelivery/');
+                $file->move($destinationPath, $picture);
+                $restaurentsOwnerDetail->licenese_delivery = $picture;
+            }
+            if (!empty($certificationShop)) {
+                $file = $certificationShop;
+                $image_name = str_replace(' ', '-', $file->getClientOriginalName());
+                $picture = time() . "." . $image_name;
+                $destinationPath = public_path('certificationShop/');
+                $file->move($destinationPath, $picture);
+                $restaurentsOwnerDetail->certification_shop = $picture;
+            }
+            $restaurentsOwnerDetail->is_document_verified = 1;
+            $restaurentsOwnerDetail->save();
+            $user = User::with('hasOneRestaurentsOwnerDetail')->find($restaurentsOwnerDetail->restaurent_owner_id);
+            $result= $this->userDetailResponse($user);
+            $response = array('success' => 1, 'message' => 'Document verified Succeessfully','result' => $result);
+            echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+            exit;
+        } catch (Exception $e) {
+            $response = array('success' => 0, 'message' => $e->getMessage());
+            echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+            exit;
+        }
+    }   
+
+    public function termsCondition(){
+        try {
+            $siteSetting = SiteSettings::first();
+            
+            $input = file_get_contents('php://input');
+            $post = json_decode($input, true);
+            $lang = isset($post['lang']) ? $post['lang'] : 'ar';
+            if ($lang == 'en') {
+                return view('render_api', ['data'=>$siteSetting->terms_conditions_en]);
+            }
+            else{
+                return view('render_api', ['data'=>$siteSetting->terms_conditions_ar]);
+            }
+        } catch (Exception $e) {
+            $response = array('success' => 0, 'message' => $e->getMessage());
+            echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+            exit;
+        }
+    }
+
+    public function aboutUs(){
+        try {
+            $siteSetting = SiteSettings::first();
+            
+            $input = file_get_contents('php://input');
+            $post = json_decode($input, true);
+            $lang = isset($post['lang']) ? $post['lang'] : 'ar';
+            if ($lang == 'en') {
+                return view('render_api', ['data'=>$siteSetting->about_us_en]);
+            }
+            else{
+                return view('render_api', ['data'=>$siteSetting->about_us_ar]);
+            }
+        } catch (Exception $e) {
+            $response = array('success' => 0, 'message' => $e->getMessage());
+            echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+            exit;
+        }
+    }
 }
