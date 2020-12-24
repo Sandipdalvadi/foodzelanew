@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Models\Permissions;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -12,12 +11,12 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Auth, Hash, DB, Lang, URL;
 
-class RestaurentOwnersController extends Controller
+class DriversController extends Controller
 {
     public function index()
     { 
 
-        return view('admin.restaurent_owners.index');
+        return view('admin.drivers.index');
     }
 
     public function list(Request $request)
@@ -32,7 +31,7 @@ class RestaurentOwnersController extends Controller
             6 =>'name',
         );
         $status = $request->input('status');
-        $totalData = User::where('role',2)->where('is_deleted',0);
+        $totalData = User::where('role',3)->where('is_deleted',0);
         if($status == 3){
             $totalData = $totalData->count();
         }
@@ -49,7 +48,7 @@ class RestaurentOwnersController extends Controller
         {            
             $search = $request->input('search.value'); 
 
-            $posts =  User::where('role',2)->where('is_deleted',0);
+            $posts =  User::where('role',3)->where('is_deleted',0);
                 if($status != 3){
                     $posts = $posts->where('status',$status);
                 }
@@ -64,7 +63,7 @@ class RestaurentOwnersController extends Controller
             ->orderBy($order,$dir)
             ->get();
 
-            $totalFiltered = User::where('role',2)->where('is_deleted',0);
+            $totalFiltered = User::where('role',3)->where('is_deleted',0);
             if($status != 3){
                 $totalFiltered = $totalFiltered->where('status',$status);
             }
@@ -78,7 +77,7 @@ class RestaurentOwnersController extends Controller
         }   
         else
         {            
-            $posts = User::where('role',2)->where('is_deleted',0);
+            $posts = User::where('role',3)->where('is_deleted',0);
             if($status != 3){
                 $posts = $posts->where('status',$status);
             }
@@ -112,14 +111,14 @@ class RestaurentOwnersController extends Controller
                 $data['phone'] = $phone;
                 $data['email'] = $email;
                 
-                $data['status'] = "<select class='js-example-basic-single form-control' onchange=changeStatus(this,'".route('admin.restaurent_owners.changeStatus',['id'=>$post->id])."')>
+                $data['status'] = "<select class='js-example-basic-single form-control' onchange=changeStatus(this,'".route('admin.drivers.changeStatus',['id'=>$post->id])."')>
                 <option value='0' ".$status0.">In Active</option>
                 <option value='1' ".$status1.">Active</option>
                 <option value='2' ".$status2.">Pending</option></select>";
                 
                 
                 $data['action'] = "<div style='display: flex;'>
-                <form style='float:left;margin-left:6px;' method='POST' action=".route('admin.restaurent_owners.delete',['id'=>$post->id]).">";
+                <form style='float:left;margin-left:6px;' method='POST' action=".route('admin.drivers.delete',['id'=>$post->id]).">";
                
                 $data['action'] .=  csrf_field();
                 $data['action'] .= method_field("DELETE");
@@ -142,7 +141,7 @@ class RestaurentOwnersController extends Controller
         $user = User::findOrFail($id);
         $user->is_deleted = 1;
         $user->save();
-        return redirect()->route('admin.restaurent_owners.index')->with('message',"User Deleted Successfully"); 
+        return redirect()->route('admin.drivers.index')->with('message',"Drivers Deleted Successfully"); 
     }
 
     public function alldeletes(Request $request)

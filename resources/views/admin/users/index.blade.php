@@ -6,10 +6,9 @@
             <div class="page-title">
                 <div class="row">
                     <div class="col-6">
-                        <h3>{{ __('message.managers') }}</h3>
+                        <h3>{{ __('message.users') }}</h3>
                         <p>
-                            <a href="{{ route('admin.managers.form',['id'=>0])}}" class="btn btn-success"><i class="fa fa-edit" aria-hidden="true"></i>Add New </a>
-                            <a style="color: white" class="btn btn-danger deletesellected" onclick='multipleDelete("{{route("admin.managers.alldelete")}}")'> <i class="fa fa-trash" aria-hidden="true"></i>Delete </a>
+                            <a style="color: white" class="btn btn-danger deletesellected" onclick='multipleDelete("{{route("admin.users.alldelete")}}")'> <i class="icofont icofont-ui-delete"></i>Delete </a>
                         </p>
                     </div>
                     <div class="col-6">
@@ -18,7 +17,7 @@
                                 <a href="{{route('admin.home')}}"> <i
                                         data-feather="home"></i></a>
                             </li>
-                            <li class="breadcrumb-item">{{ __('message.managers') }}</li>
+                            <li class="breadcrumb-item">{{ __('message.users') }}</li>
                         </ol>
                     </div>
                 </div>
@@ -35,6 +34,14 @@
                                     <div id="tabarticleid_wrapper" class="dataTables_wrapper no-footer">
                      
                                         <table id="example" class="display nowrap" style="width:100%" role="grid" aria-describedby="tabarticleid_info" style="width: 100%px;">
+                                            <div class="col-md-3" style="margin-bottom: 10px;">
+                                                <select class="form-control js-example-basic-single" onchange="usersDatatable()" name="status" id="selectStatus">
+                                                    <option value="3">All</option>
+                                                    <option value="2">Pening</option>
+                                                    <option value="0">In Active</option>
+                                                    <option value="1">Active</option>
+                                                </select>
+                                            </div>
                                             <thead>
                                                 <tr role="row">
                                                     <th class="text-center sorting_asc" style="text-align: center; width: 100px;" rowspan="1" colspan="1" aria-label="">
@@ -62,16 +69,22 @@
     <script type="text/javascript">
         $(document).ready(function()
         {
+            usersDatatable();
+            
+        });
+        function usersDatatable(){
+            var status = $("#selectStatus option:selected").val();
             $('#example').DataTable({
                   
-               "processing": true,
-               "serverSide": true,
-               "rowId": 'Id',
-               "ajax":{
-                    "url": "{{ route('admin.managers.list') }}",
+                "processing": true,
+                "serverSide": true,
+                destroy: true,
+                "rowId": 'id',
+                "ajax":{
+                    "url": "{{ route('admin.users.list') }}",
                     "dataType": "json",
                     "type": "POST",
-                    "data":{ _token: "{{csrf_token()}}"},
+                    "data":{ _token: "{{csrf_token()}}", status:status},
                 },
        
                 "columns": [
@@ -80,23 +93,19 @@
                     { "data": "name"},
                     { "data": "email"},
                     { "data": "phone"},
-                    { "data": "image"},
+                    { "data": "image","orderable":false,"bSortable": true },
                     { "data": "status","orderable":false,"bSortable": true },
                     { "data": "action","orderable":false,"bSortable": true },                
                 ]  
             });
-        });
+        }
+        
         function changeStatus(objs,urls){
-            var dataValue = 0;
-            if ($(objs).prop('checked')==true){ 
-                var dataValue = 1;
-            }
             jQuery.ajax({
                 type: "get",
                 url: urls,
-                data: {'status':dataValue},
+                data: {'status':objs.value},
                 success: function(resultData){
-                        
                 }
             });
 

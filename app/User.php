@@ -36,4 +36,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function hasOneRestaurentsOwnerDetail()
+    {
+        return $this->hasOne('App\Models\RestaurentsOwnerDetail', 'restaurent_owner_id', 'id');
+    }
 }

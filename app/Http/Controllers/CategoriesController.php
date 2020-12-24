@@ -79,7 +79,7 @@ class CategoriesController extends Controller
                 $nameEn = $post->name_en ? $post->name_en : '-';
                 $nameAr = $post->name_ar ? $post->name_ar : '-';
                 $img= $post->image ? $post->image : '';
-                $image = '<img style="width:90px;height:90px;" class="b-r-10" src="'.file_exists_in_folder('categories', $img).'"alt="" />';
+                $image = '<img style="width:50px;height:50px;" class="b-r-10" src="'.file_exists_in_folder('categories', $img).'"alt="" />';
 
                 $data['checkdata']="<input type='checkbox' class='case' id='$post->id' name='case' value='$post->id'>";
                 $data['id'] = $post->id;
