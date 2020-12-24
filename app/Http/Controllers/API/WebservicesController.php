@@ -46,7 +46,7 @@ class WebservicesController extends Controller
                 $checkEmail = User::where('phone',$post['phone'])->first();
             }
             if (!empty($checkEmail) && $post['isSocial'] == 0) {
-                $response = array('success' => 0, 'message' => 'This Email Already Exists');
+                $response = array('success' => 0, 'message' => 'This Email or phone Email Already Exists');
                 echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
                 exit;
             }
