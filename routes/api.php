@@ -26,5 +26,3 @@ Route::post('phoneResetPassword', 'API\WebservicesController@phoneResetPassword'
 Route::post('categoriesList', 'API\WebservicesController@categoriesList');
 Route::post('addRestaurent', 'API\WebservicesController@addRestaurent')->middleware('api_form');
 Route::post('restaurentOwnerDocVerified', 'API\WebservicesController@restaurentOwnerDocVerified')->middleware('api_form');
-Route::post('termsCondition', 'API\WebservicesController@termsCondition');
-Route::post('aboutUs', 'API\WebservicesController@aboutUs');
