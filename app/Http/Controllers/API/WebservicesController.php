@@ -171,6 +171,11 @@ class WebservicesController extends Controller
                     echo json_encode($arr, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP);
                     exit;
                 }
+                elseif ($user->status == 2) {
+                    $arr = array('success' => 0, 'message' => 'User request is pending.');
+                    echo json_encode($arr, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP);
+                    exit;
+                }
                 elseif ($user->is_deleted == 1) {
                     $arr = array('success' => 0, 'message' => 'User is deleted.');
                     echo json_encode($arr, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP);
@@ -380,7 +385,7 @@ class WebservicesController extends Controller
             }
             $user = User::where('phone',$post['phone'])->first();     
             if(empty($user)){
-                $response = array('success' => 0, 'message' => 'User Does not exists!');
+                $response = array('success' => 0, 'message' => 'Phone number not registered!');
                 echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
                 exit;
             }       
@@ -425,7 +430,7 @@ class WebservicesController extends Controller
             }
             else
             {
-                $response = array('success' => 0, 'message' => 'No category found');
+                $response = array('success' => 0, 'message' => 'Category not found.');
                  echo json_encode($response,JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);exit;
             }
         }
@@ -550,43 +555,25 @@ class WebservicesController extends Controller
         }
     }   
 
-    public function termsCondition(){
-        try {
-            $siteSetting = SiteSettings::first();
-            
-            $input = file_get_contents('php://input');
-            $post = json_decode($input, true);
-            $lang = isset($post['lang']) ? $post['lang'] : 'ar';
-            if ($lang == 'en') {
-                return view('render_api', ['data'=>$siteSetting->terms_conditions_en]);
-            }
-            else{
-                return view('render_api', ['data'=>$siteSetting->terms_conditions_ar]);
-            }
-        } catch (Exception $e) {
-            $response = array('success' => 0, 'message' => $e->getMessage());
-            echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
-            exit;
+    public function termsCondition(Request $request){
+        $siteSetting = SiteSettings::first();
+        $lang = $request->lang ? $request->lang : 'ar';
+        if ($lang == 'en') {
+            return view('render_api', ['data'=>$siteSetting->terms_conditions_en]);
+        }
+        else{
+            return view('render_api', ['data'=>$siteSetting->terms_conditions_ar]);
         }
     }
 
-    public function aboutUs(){
-        try {
-            $siteSetting = SiteSettings::first();
-            
-            $input = file_get_contents('php://input');
-            $post = json_decode($input, true);
-            $lang = isset($post['lang']) ? $post['lang'] : 'ar';
-            if ($lang == 'en') {
-                return view('render_api', ['data'=>$siteSetting->about_us_en]);
-            }
-            else{
-                return view('render_api', ['data'=>$siteSetting->about_us_ar]);
-            }
-        } catch (Exception $e) {
-            $response = array('success' => 0, 'message' => $e->getMessage());
-            echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
-            exit;
+    public function aboutUs(Request $request){
+        $siteSetting = SiteSettings::first();
+        $lang = $request->lang ? $request->lang : 'ar';
+        if ($lang == 'en') {
+            return view('render_api', ['data'=>$siteSetting->about_us_en]);
+        }
+        else{
+            return view('render_api', ['data'=>$siteSetting->about_us_ar]);
         }
     }
 }

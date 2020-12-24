@@ -15,6 +15,9 @@ Route::get('/', function () {
     return view('auth.login');
     // return view('welcome');
 });
+Route::get('termsCondition/{lang}', 'API\WebservicesController@termsCondition');
+Route::get('aboutUs/{lang}', 'API\WebservicesController@aboutUs');
+
 Auth::routes();
 
 Route::get('/ForgotPassword/{id}/{token}','HomeController@forgotPwd');

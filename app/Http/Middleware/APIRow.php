@@ -17,13 +17,14 @@ class APIRow
         // exit;
         if((!isset($post['loginToken'])) || empty($post['loginToken'])){
             return response()->json([
+                'status' => 0,
                 'error' => "Unauthorized access"
             ], 401);
         }else{
             $access_token = User::where("login_token", $post['loginToken'])->first();
             if($access_token==null){
                 return response()->json([
-                    'status' => false,
+                    'status' => 0,
                     'error' => "Unauthorized access"
                 ], 401);
             }

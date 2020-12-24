@@ -17,13 +17,14 @@ class APIForm
         // exit;
         if((!isset($decode->loginToken)) || empty($decode->loginToken)){
             return response()->json([
+                'status' => 0,
                 'error' => "Unauthorized access"
             ], 401);
         }else{
             $access_token = User::where("login_token", $decode->loginToken)->first();
             if($access_token==null){
                 return response()->json([
-                    'status' => false,
+                    'status' => 0,
                     'error' => "Unauthorized access"
                 ], 401);
             }
