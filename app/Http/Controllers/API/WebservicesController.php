@@ -80,9 +80,9 @@ class WebservicesController extends Controller
             $newUser->device_type = $post['deviceType']; 
             $newUser->status = $post['isActive']; 
             $newUser->language_code = $post['languageCode']; 
-            $newUser->address = $post['address']; 
-            $newUser->latitude = $post['latitude']; 
-            $newUser->longitude = $post['longitude']; 
+            $newUser->address = isset($post['address']) ? $post['address'] : ''; 
+            $newUser->latitude = isset($post['latitude']) ? $post['latitude'] : ''; 
+            $newUser->longitude = isset($post['longitude']) ? $post['longitude'] : ''; 
             
             // $newUser->status = 1; 
             $newUser->save();
@@ -447,12 +447,12 @@ class WebservicesController extends Controller
         $ownerLogo = $request->file('ownerLogo');
         $decode = json_decode($post['json_content']);
         try {
-            if ((!isset($decode->userId)) || (!isset($decode->name))) {
+            if ((!isset($decode->userId)) || (!isset($decode->name)) || (!isset($decode->description )) || (!isset($decode->address)) || (!isset($decode->latitude)) || (!isset($decode->longitude)) || (!isset($decode->phone)) || (!isset($decode->mobile)) || (!isset($decode->information)) || (!isset($decode->deliveryFee)) || (!isset($decode->adminCommission))) {
                 $response = array('success' => 0, 'message' => 'All Fields Are Required');
                 echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
                 exit;
             }
-            if ((empty($decode->userId)) || (empty($decode->name))) {
+            if ((empty($decode->userId)) || (empty($decode->name))|| (empty($decode->description )) || (empty($decode->address)) || (empty($decode->latitude)) || (empty($decode->longitude)) || (empty($decode->phone)) || (empty($decode->mobile)) || (empty($decode->information)) || (empty($decode->deliveryFee)) || (empty($decode->adminCommission))) {
                 $response = array('success' => 0, 'message' => 'All Fields Are Required');
                 echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
                 exit;
@@ -460,6 +460,15 @@ class WebservicesController extends Controller
             $restaurent = new Restaurents;
             $restaurent->user_id = $decode->userId;
             $restaurent->name = $decode->name;
+            $restaurent->description = $decode->description;
+            $restaurent->address = $decode->address;
+            $restaurent->latitude = $decode->latitude;
+            $restaurent->longitude = $decode->longitude;
+            $restaurent->phone = $decode->phone;
+            $restaurent->mobile = $decode->mobile;
+            $restaurent->information = $decode->information;
+            $restaurent->delivery_fee = $decode->deliveryFee;
+            $restaurent->admin_commission = $decode->adminCommission;
             $restaurent->status = 2;
             $restaurent->is_deleted = 0;
             if (!empty($ownerLogo)) {
@@ -473,6 +482,15 @@ class WebservicesController extends Controller
             $restaurent->save();
             $result['id'] = $restaurent->id;
             $result['name'] = $restaurent->name ? $restaurent->name : '';
+            $result['description'] = $restaurent->description ? $restaurent->description : '';
+            $result['address'] = $restaurent->address ? $restaurent->address : '';
+            $result['latitude'] = $restaurent->latitude ? $restaurent->latitude : '';
+            $result['longitude'] = $restaurent->longitude ? $restaurent->longitude : '';
+            $result['phone'] = $restaurent->phone ? $restaurent->phone : '';
+            $result['mobile'] = $restaurent->mobile ? $restaurent->mobile : '';
+            $result['information'] = $restaurent->information ? $restaurent->information : '';
+            $result['deliveryFee'] = $restaurent->delivery_fee ? $restaurent->delivery_fee : '';
+            $result['adminCommission'] = $restaurent->admin_commission ? $restaurent->admin_commission : '';
             $result['ownerLogo'] = $restaurent->owner_logo ? file_exists_in_folder('ownerLogo', $restaurent->owner_logo)  : file_exists_in_folder('ownerLogo', '');
             
             $response = array('success' => 1, 'message' => 'Restaurent Added Succeessfully','result' => $result);

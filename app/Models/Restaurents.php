@@ -8,7 +8,6 @@ class Restaurents extends Authenticatable
 {
 
 
-	public $timestamps = false;
 	protected $table = 'restaurents';
     protected $primaryKey = 'id';
 	
