@@ -501,11 +501,15 @@ class WebservicesController extends Controller
             $restaurentCategories = RestaurentCategory::with('hasOneCategory')->where('restaurent_id',$restaurent->id)->get();
             $result['categories'] = [];
             foreach($restaurentCategories as $restaurentCategory){
-                $categoryObj = $restaurentCategory->hasOneCategory ? $restaurentCategory->hasOneCategory : [];
-                $category['id'] = $categoryObj ? $categoryObj->id : '';
-                $category['name'] = $categoryObj ? $categoryObj->name : '';
-                $category['image'] = $categoryObj->categories ? file_exists_in_folder('categories', $restaurent->image)  : file_exists_in_folder('categories', '');
-                $result['categories'][] = $category;
+                $category = [];
+                $categoryObj = $restaurentCategory->hasOneCategory ? $restaurentCategory->hasOneCategory : '';
+                if(!empty($categoryObj)){
+                    $category['id'] = $categoryObj ? $categoryObj->id : '';
+                    $category['nameAr'] = $categoryObj ? $categoryObj->name_ar : '';
+                    $category['nameEn'] = $categoryObj ? $categoryObj->name_en : '';
+                    $category['image'] = $categoryObj ? file_exists_in_folder('categories', $categoryObj->image)  : file_exists_in_folder('categories', '');
+                    $result['categories'][] = $category;
+                }
             }
             $response = array('success' => 1, 'message' => 'Restaurent Added Succeessfully','result' => $result);
             echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
