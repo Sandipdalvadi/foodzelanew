@@ -12,6 +12,6 @@ class RestaurentCategory extends Authenticatable
     
     public function hasOneCategory()
     {
-        return $this->hasOne('App\Models\Category', 'id', 'category_id');
+        return $this->hasOne('App\Models\Categories', 'id', 'category_id');
     }
 }
