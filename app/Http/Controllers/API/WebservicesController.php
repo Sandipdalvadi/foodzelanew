@@ -449,12 +449,12 @@ class WebservicesController extends Controller
         $ownerLogo = $request->file('ownerLogo');
         $decode = json_decode($post['json_content']);
         try {
-            if ((!isset($decode->userId)) || (!isset($decode->name)) || (!isset($decode->description )) || (!isset($decode->address)) || (!isset($decode->latitude)) || (!isset($decode->longitude)) || (!isset($decode->phone)) || (!isset($decode->mobile)) || (!isset($decode->information)) || (!isset($decode->deliveryFee)) || (!isset($decode->adminCommission)) || (!isset($decode->categories))) {
+            if ((!isset($decode->userId)) || (!isset($decode->name)) || (!isset($decode->description )) || (!isset($decode->address)) || (!isset($decode->latitude)) || (!isset($decode->longitude)) || (!isset($decode->phone)) || (!isset($decode->deliveryFee)) || (!isset($decode->adminCommission)) || (!isset($decode->categories))) {
                 $response = array('success' => 0, 'message' => 'All Fields Are Required');
                 echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
                 exit;
             }
-            if ((empty($decode->userId)) || (empty($decode->name))|| (empty($decode->description )) || (empty($decode->address)) || (empty($decode->latitude)) || (empty($decode->longitude)) || (empty($decode->phone)) || (empty($decode->mobile)) || (empty($decode->information)) || (empty($decode->deliveryFee)) || (empty($decode->adminCommission))) {
+            if ((empty($decode->userId)) || (empty($decode->name))|| (empty($decode->description )) || (empty($decode->address)) || (empty($decode->latitude)) || (empty($decode->longitude)) || (empty($decode->phone)) || (empty($decode->deliveryFee)) || (empty($decode->adminCommission))) {
                 $response = array('success' => 0, 'message' => 'All Fields Are Required');
                 echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
                 exit;
