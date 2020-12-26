@@ -8,6 +8,7 @@ use App\Models\Restaurents;
 use App\Models\Categories;
 use App\Models\RestaurentsOwnerDetail;
 use App\Models\SiteSettings;
+use App\Models\RestaurentCategory;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -128,7 +129,8 @@ class WebservicesController extends Controller
         $userData['longitude'] = $user->longitude ? $user->longitude : '';
         if($user->role == 2){
             $ownerDetail = $user->hasOneRestaurentsOwnerDetail ? $user->hasOneRestaurentsOwnerDetail : [];
-            $userData['is_document_verified'] = $ownerDetail ? $ownerDetail->is_document_verified : 0;
+            $userData['is_document_verified'] = $ownerDetail ? $ownerDetail->is_document_verified : false;
+            $userData['is_document_verified'] = $userData['is_document_verified'] == 1 ? true : false;
             if($ownerDetail){
                 $userData['liceneseDelivery'] = $ownerDetail->licenese_delivery ? file_exists_in_folder('liceneseDelivery', $ownerDetail->licenese_delivery)  : file_exists_in_folder('liceneseDelivery', '');
                 $userData['certificationShop'] = $ownerDetail->certification_shop ? file_exists_in_folder('certificationShop', $ownerDetail->certification_shop)  : file_exists_in_folder('certificationShop', '');
@@ -447,7 +449,7 @@ class WebservicesController extends Controller
         $ownerLogo = $request->file('ownerLogo');
         $decode = json_decode($post['json_content']);
         try {
-            if ((!isset($decode->userId)) || (!isset($decode->name)) || (!isset($decode->description )) || (!isset($decode->address)) || (!isset($decode->latitude)) || (!isset($decode->longitude)) || (!isset($decode->phone)) || (!isset($decode->mobile)) || (!isset($decode->information)) || (!isset($decode->deliveryFee)) || (!isset($decode->adminCommission))) {
+            if ((!isset($decode->userId)) || (!isset($decode->name)) || (!isset($decode->description )) || (!isset($decode->address)) || (!isset($decode->latitude)) || (!isset($decode->longitude)) || (!isset($decode->phone)) || (!isset($decode->mobile)) || (!isset($decode->information)) || (!isset($decode->deliveryFee)) || (!isset($decode->adminCommission)) || (!isset($decode->categories))) {
                 $response = array('success' => 0, 'message' => 'All Fields Are Required');
                 echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
                 exit;
@@ -465,8 +467,6 @@ class WebservicesController extends Controller
             $restaurent->latitude = $decode->latitude;
             $restaurent->longitude = $decode->longitude;
             $restaurent->phone = $decode->phone;
-            $restaurent->mobile = $decode->mobile;
-            $restaurent->information = $decode->information;
             $restaurent->delivery_fee = $decode->deliveryFee;
             $restaurent->admin_commission = $decode->adminCommission;
             $restaurent->status = 2;
@@ -480,6 +480,14 @@ class WebservicesController extends Controller
                 $restaurent->owner_logo = $picture;
             }
             $restaurent->save();
+            if(count($decode->categories)){
+                foreach($decode->categories as $category){
+                    $restaurentCategory = new RestaurentCategory;
+                    $restaurentCategory->restaurent_id = $restaurent->id;
+                    $restaurentCategory->category_id = $category;
+                    $restaurentCategory->save();
+                }
+            }
             $result['id'] = $restaurent->id;
             $result['name'] = $restaurent->name ? $restaurent->name : '';
             $result['description'] = $restaurent->description ? $restaurent->description : '';
@@ -487,12 +495,18 @@ class WebservicesController extends Controller
             $result['latitude'] = $restaurent->latitude ? $restaurent->latitude : '';
             $result['longitude'] = $restaurent->longitude ? $restaurent->longitude : '';
             $result['phone'] = $restaurent->phone ? $restaurent->phone : '';
-            $result['mobile'] = $restaurent->mobile ? $restaurent->mobile : '';
-            $result['information'] = $restaurent->information ? $restaurent->information : '';
             $result['deliveryFee'] = $restaurent->delivery_fee ? $restaurent->delivery_fee : '';
             $result['adminCommission'] = $restaurent->admin_commission ? $restaurent->admin_commission : '';
             $result['ownerLogo'] = $restaurent->owner_logo ? file_exists_in_folder('ownerLogo', $restaurent->owner_logo)  : file_exists_in_folder('ownerLogo', '');
-            
+            $restaurentCategories = RestaurentCategory::with('hasOneCategory')->where('restaurent_id',$restaurent->id)->get();
+            $result['categories'] = [];
+            foreach($restaurentCategories as $restaurentCategory){
+                $categoryObj = $restaurentCategory->hasOneCategory ? $restaurentCategory->hasOneCategory : [];
+                $category['id'] = $categoryObj ? $categoryObj->id : '';
+                $category['name'] = $categoryObj ? $categoryObj->name : '';
+                $category['image'] = $categoryObj->categories ? file_exists_in_folder('categories', $restaurent->image)  : file_exists_in_folder('categories', '');
+                $result['categories'][] = $category;
+            }
             $response = array('success' => 1, 'message' => 'Restaurent Added Succeessfully','result' => $result);
             echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
             exit;
