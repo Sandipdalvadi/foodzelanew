@@ -97,15 +97,11 @@ class RestaurentsController extends Controller
                 $status0 = $post->status == 0 ? 'selected' : ''; 
                 $status1 = $post->status == 1 ? 'selected' : ''; 
                 $status2 = $post->status == 2 ? 'selected' : ''; 
-                $liceneseDelivery = '<img style="width:50px;height:50px;" class="b-r-10" src="'.file_exists_in_folder('liceneseDelivery', $post->licenese_delivery).'" alt="" />';
-                $certificationShop = '<img style="width:50px;height:50px;" class="b-r-10" src="'.file_exists_in_folder('certificationShop', $post->certification_shop).'" alt="" />';
                 $ownerLogo = '<img style="width:50px;height:50px;" class="b-r-10" src="'.file_exists_in_folder('ownerLogo', $post->owner_logo).'" alt="" />';
                 
                 $data['checkdata']="<input type='checkbox' class='case' id='$post->id' name='case' value='$post->id'>";
                 $data['id'] = $post->id;
                 $data['name'] = $name;
-                $data['licenese_delivery'] = $liceneseDelivery;
-                $data['certification_shop'] = $certificationShop;
                 $data['owner_logo'] = $ownerLogo;
                 $data['status'] = "<select class='js-example-basic-single form-control' onchange=changeStatus(this,'".route('admin.restaurents.changeStatus',['id'=>$post->id])."')>
                 <option value='0' ".$status0.">In Active</option>
@@ -113,7 +109,7 @@ class RestaurentsController extends Controller
                 <option value='2' ".$status2.">Pending</option></select>";
                 
                 $data['action'] = "<div style='display: flex;'>
-                <a class='btn btn-primary' href=".route('admin.restaurents.detail',['id'=>$post->id]).">Detail<i data-feather='eye'></i></a>
+                <a class='btn btn-primary' href=".route('admin.restaurents.detail',['id'=>$post->id])."><i class='icofont icofont-eye-alt'></i></a>
                 <form style='float:left;margin-left:6px;' method='POST' action=".route('admin.restaurents.delete',['id'=>$post->id]).">";
                
                 $data['action'] .=  csrf_field();
@@ -141,8 +137,8 @@ class RestaurentsController extends Controller
     }
     public function detail($id)
     {   
-        $restaurents = Restaurents::findOrFail($id);
-        return view('admin.restaurents.detail');
+        $restaurents = Restaurents::with('hasOneUser')->findOrFail($id);
+        return view('admin.restaurents.detail',['restaurents'=>$restaurents]);
       
     }
 

@@ -10,5 +10,8 @@ class Restaurents extends Authenticatable
 
 	protected $table = 'restaurents';
     protected $primaryKey = 'id';
-	
+	public function hasOneUser()
+    {
+        return $this->hasOne('App\User', 'id', 'user_id');
+    }
 }

@@ -59,9 +59,19 @@ return [
     'license_delivery' => 'License Delivery',
     'owner_logo' => 'Owner Log',
     'certification_shop' => 'Certificate Shop',
-    
-    
-    
-      
+    'restaurents_detail' => 'Restaurents detail',
+    'restaurent_name' => 'Restaurent name',
+    'restaurent_owner_name' => 'Restaurent owner name',
+    'open_time' => 'Open Time',
+    'close_time' => 'Close Time',
+    'total_orders' => 'Total Orders',
+    'total_foods' => 'Total Foods',
+    'owner_info' => 'Owner Info',
+    'description' => 'Description',
+    'dddress' => 'Address',
+    'latitude' => 'Latitude',
+    'longitude' => 'Longitude',
+    'delivery_fee' => 'Delivery fee',
+    'admin_commission' => 'Admin commission',
     
 ];
