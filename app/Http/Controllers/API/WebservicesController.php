@@ -8,6 +8,8 @@ use App\Models\Restaurents;
 use App\Models\Categories;
 use App\Models\RestaurentsOwnerDetail;
 use App\Models\SiteSettings;
+use App\Models\BankAccount;
+use App\Models\BankList;
 use App\Models\RestaurentCategory;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
@@ -612,6 +614,72 @@ class WebservicesController extends Controller
         }
         else{
             return view('render_api', ['data'=>$siteSetting->about_us_ar]);
+        }
+    }
+    
+    public function addBankAccount()
+    {
+        $input = file_get_contents('php://input');
+        $post = json_decode($input, true);
+        
+        try {
+            if ((!isset($post['name'])) || (!isset($post['userId'])) || (!isset($post['bankId'])) || (!isset($post['accountNumber'])) || (!isset($post['city'])) || (empty($post['name'])) || (empty($post['bankId'])) || (empty($post['accountNumber']))|| (empty($post['city']))  || (empty($post['userId']))) {
+                $response = array('success' => 0, 'message' => 'All Fields Are Required');
+                echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+                exit;
+            }
+            $bankAccount = new BankAccount;
+            $bankAccount->user_id = $post['userId'];
+            $bankAccount->name = $post['name'];
+            $bankAccount->bank_id = $post['bankId'];
+            $bankAccount->account_number = $post['accountNumber'];
+            $bankAccount->city = $post['city'];
+            $bankAccount->save();
+            $result = [];
+            $bankList = BankList::find($bankAccount->bank_id);
+            $result['name'] = $bankAccount->name ? $bankAccount->name : '';
+            $result['bankName'] = $bankList ? $bankList->name : '';
+            $result['bankId'] = $bankList ? $bankList->id : '';
+            $result['accountNumber'] = $bankAccount->account_number ? $bankAccount->account_number : '';
+            $result['city'] = $bankAccount->city ? $bankAccount->city : '';
+
+            $response = array('success' => 1 ,'message' => 'Bank account saved successfully.', 'result' => $result);
+            echo json_encode($response,JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);exit;
+            
+        }
+        catch (Exception $e) {
+            $response = array('success' => 0, 'message' => $e->getMessage());
+            echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+            exit;
+        }
+    }
+    public function bankList()
+    {
+        $input = file_get_contents('php://input');
+        $post = json_decode($input, true);
+        
+        try {
+            $bankLists = BankList::where('status',1)->get();
+            $responses = [];
+            if(count($bankLists)){
+                foreach($bankLists as $bankList){
+                    $response = [];
+                    $response['id'] = $bankList->id;
+                    $response['name'] = $bankList->name ? $bankList->name : '';
+                    $responses[] = $response;
+                }
+                $response = array('success' => 1 ,'message' => 'Bank list loaded successfully.', 'result' => $responses);
+                echo json_encode($response,JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);exit;
+            }
+            else{
+                $response = array('success' => 0, 'message' => 'Bank not found yet.');
+                echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);    
+            }
+        }
+        catch (Exception $e) {
+            $response = array('success' => 0, 'message' => $e->getMessage());
+            echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+            exit;
         }
     }
 }
