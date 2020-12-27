@@ -449,12 +449,12 @@ class WebservicesController extends Controller
         $ownerLogo = $request->file('ownerLogo');
         $decode = json_decode($post['json_content']);
         try {
-            if ((!isset($decode->userId)) || (!isset($decode->name)) || (!isset($decode->description )) || (!isset($decode->address)) || (!isset($decode->latitude)) || (!isset($decode->longitude)) || (!isset($decode->phone)) || (!isset($decode->deliveryFee)) || (!isset($decode->adminCommission)) || (!isset($decode->categories))) {
+            if ((!isset($decode->userId)) || (!isset($decode->name)) || (!isset($decode->description )) || (!isset($decode->address)) || (!isset($decode->latitude)) || (!isset($decode->longitude)) || (!isset($decode->phone)) || (!isset($decode->deliveryFee)) || (!isset($decode->adminCommission)) || (!isset($decode->categories)) || (!isset($decode->openTime)) || (!isset($decode->closeTime))) {
                 $response = array('success' => 0, 'message' => 'All Fields Are Required');
                 echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
                 exit;
             }
-            if ((empty($decode->userId)) || (empty($decode->name))|| (empty($decode->description )) || (empty($decode->address)) || (empty($decode->latitude)) || (empty($decode->longitude)) || (empty($decode->phone)) || (empty($decode->deliveryFee)) || (empty($decode->adminCommission))) {
+            if ((empty($decode->userId)) || (empty($decode->name))|| (empty($decode->description )) || (empty($decode->address)) || (empty($decode->latitude)) || (empty($decode->longitude)) || (empty($decode->phone)) || (empty($decode->deliveryFee)) || (empty($decode->adminCommission)) || (empty($decode->openTime)) || (empty($decode->closeTime))) {
                 $response = array('success' => 0, 'message' => 'All Fields Are Required');
                 echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
                 exit;
@@ -469,6 +469,8 @@ class WebservicesController extends Controller
             $restaurent->phone = $decode->phone;
             $restaurent->delivery_fee = $decode->deliveryFee;
             $restaurent->admin_commission = $decode->adminCommission;
+            $restaurent->open_time = $decode->openTime;
+            $restaurent->close_time = $decode->closeTime;
             $restaurent->status = 2;
             $restaurent->is_deleted = 0;
             if (!empty($ownerLogo)) {
@@ -496,6 +498,10 @@ class WebservicesController extends Controller
             $result['longitude'] = $restaurent->longitude ? $restaurent->longitude : '';
             $result['phone'] = $restaurent->phone ? $restaurent->phone : '';
             $result['deliveryFee'] = $restaurent->delivery_fee ? $restaurent->delivery_fee : '';
+            $result['adminCommission'] = $restaurent->admin_commission ? $restaurent->admin_commission : '';
+            $result['openTime'] = $restaurent->open_time ? $restaurent->open_time : '';
+            $result['closeTime'] = $restaurent->close_time ? $restaurent->close_time : '';
+            $result['isOpen'] = $restaurent->is_open ? $restaurent->is_open : false;
             $result['adminCommission'] = $restaurent->admin_commission ? $restaurent->admin_commission : '';
             $result['ownerLogo'] = $restaurent->owner_logo ? file_exists_in_folder('ownerLogo', $restaurent->owner_logo)  : file_exists_in_folder('ownerLogo', '');
             $restaurentCategories = RestaurentCategory::with('hasOneCategory')->where('restaurent_id',$restaurent->id)->get();
