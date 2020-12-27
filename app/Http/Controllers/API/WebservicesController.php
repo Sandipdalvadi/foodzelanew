@@ -173,11 +173,6 @@ class WebservicesController extends Controller
                     echo json_encode($arr, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP);
                     exit;
                 }
-                elseif ($user->status == 2) {
-                    $arr = array('success' => 0, 'message' => 'User request is pending.');
-                    echo json_encode($arr, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP);
-                    exit;
-                }
                 elseif ($user->is_deleted == 1) {
                     $arr = array('success' => 0, 'message' => 'User is deleted.');
                     echo json_encode($arr, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP);
@@ -189,7 +184,7 @@ class WebservicesController extends Controller
                     $arr = array('success' => 0, 'message' => 'Invalid email or password.');
                     echo json_encode($arr, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP);
                     exit;
-                } elseif ($user->status== 1) {
+                } elseif ($user->status== 1 || $user->status== 2) {
                     $loginToken=substr(str_shuffle($user->id.'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') , 0 , 20);
                     $user->login_token = $loginToken;
                     $user->device_type = $post['deviceType'];
@@ -471,6 +466,7 @@ class WebservicesController extends Controller
             $restaurent->admin_commission = $decode->adminCommission;
             $restaurent->open_time = $decode->openTime;
             $restaurent->close_time = $decode->closeTime;
+            $restaurent->is_open = $decode->isOpen;
             $restaurent->status = 2;
             $restaurent->is_deleted = 0;
             if (!empty($ownerLogo)) {
