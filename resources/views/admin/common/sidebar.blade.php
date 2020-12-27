@@ -42,7 +42,7 @@
             @endif
             @if(auth()->user()->role == 1 || in_array('/admin/foods/index',$viewArray))
             <li class="sidebar-list">
-               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i class="icofont icofont-fast-food" aria-hidden="true"></i></i><span>{{ __('message.foods') }} </span>
+               <a class="sidebar-link sidebar-title link-nav" href="javascript:void(0)"><i data-feather="food"></i><span>{{ __('message.foods') }} </span>
                </a> 
             </li>
             @endif
@@ -60,19 +60,19 @@
             @endif
             @if(auth()->user()->role == 1 || in_array('/admin/restaurent_owners/index',$viewArray))
             <li class="sidebar-list">
-               <a class="sidebar-link sidebar-title link-nav" href="{{ route('admin.restaurent_owners.index') }}"><i class="icofont icofont-user-suited"></i></i><span>{{ __('message.restaurent_owners') }} </span>
+               <a class="sidebar-link sidebar-title link-nav" href="{{ route('admin.restaurent_owners.index') }}"><i data-feather="shop-owner"></i><span>{{ __('message.restaurent_owners') }} </span>
                </a> 
             </li>
             @endif
             @if(auth()->user()->role == 1 || in_array('/admin/restaurents/index',$viewArray))
             <li class="sidebar-list">
-               <a class="sidebar-link sidebar-title link-nav" href="{{ route('admin.restaurents.index') }}"><i class="icofont icofont-user-suited"></i></i><span>{{ __('message.restaurents') }} </span>
+               <a class="sidebar-link sidebar-title link-nav" href="{{ route('admin.restaurents.index') }}"><i data-feather="restaurents"></i><span>{{ __('message.restaurents') }} </span>
                </a> 
             </li>
             @endif
             @if(auth()->user()->role == 1 || in_array('/admin/drivers/index',$viewArray))
             <li class="sidebar-list">
-               <a class="sidebar-link sidebar-title link-nav" href="{{ route('admin.drivers.index') }}"><i class="icofont icofont-hotel-boy-alt"></i><span>{{ __('message.drivers') }} </span>
+               <a class="sidebar-link sidebar-title link-nav" href="{{ route('admin.drivers.index') }}"><i data-feather="taxi-driver"></i><span>{{ __('message.drivers') }} </span>
                </a> 
             </li>
             @endif

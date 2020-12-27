@@ -39931,3 +39931,15 @@ body[class*='dark-'] .for-light {
 }
 .page-wrapper.compact-wrapper .page-body-wrapper.sidebar-icon div.sidebar-wrapper .sidebar-main .sidebar-links>li:hover .sidebar-link:not(.active):hover i { color: var(--theme-deafult); }
 
+
+svg.feather.feather-food path, svg.feather.feather-shop-owner path, svg.feather.feather-restaurents path, svg.feather.feather-taxi-driver path {
+    transform: scale(0.05);
+    fill: #2c323f;
+}
+.page-wrapper.compact-wrapper .page-body-wrapper.sidebar-icon div.sidebar-wrapper .sidebar-main .sidebar-links>li.sidebar-list:hover>a:hover svg.feather.feather-food path,
+.page-wrapper.compact-wrapper .page-body-wrapper.sidebar-icon div.sidebar-wrapper .sidebar-main .sidebar-links>li.sidebar-list:hover>a:hover svg.feather.feather-shop-owner path,
+.page-wrapper.compact-wrapper .page-body-wrapper.sidebar-icon div.sidebar-wrapper .sidebar-main .sidebar-links>li.sidebar-list:hover>a:hover svg.feather.feather-restaurents path,
+.page-wrapper.compact-wrapper .page-body-wrapper.sidebar-icon div.sidebar-wrapper .sidebar-main .sidebar-links>li.sidebar-list:hover>a:hover svg.feather.feather-taxi-driver path {
+    fill: var(--theme-deafult);
+}
+

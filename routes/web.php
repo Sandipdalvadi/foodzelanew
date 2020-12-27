@@ -49,6 +49,7 @@ Route::group(['middleware'=>'admin','prefix'=>'admin'],function(){
     foreach($paths as $slug => $controller){
         Route::get('/'.$slug.'/index', $controller.'@index')->name('admin.'.$slug.'.index');
         Route::post('/'.$slug.'/list', $controller.'@list')->name('admin.'.$slug.'.list');
+        Route::get('/'.$slug.'/detail/{id}', $controller.'@detail')->name('admin.'.$slug.'.detail');
         Route::delete('/'.$slug.'/delete/{id}', $controller.'@destroy')->name('admin.'.$slug.'.delete');
         Route::get('/'.$slug.'/form/{id}', $controller.'@form')->name('admin.'.$slug.'.form');
         Route::post('/'.$slug.'/store/', $controller.'@store')->name('admin.'.$slug.'.save');

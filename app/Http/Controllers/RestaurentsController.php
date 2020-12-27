@@ -113,6 +113,7 @@ class RestaurentsController extends Controller
                 <option value='2' ".$status2.">Pending</option></select>";
                 
                 $data['action'] = "<div style='display: flex;'>
+                <a class='btn btn-primary' href=".route('admin.restaurents.detail',['id'=>$post->id]).">Detail<i data-feather='eye'></i></a>
                 <form style='float:left;margin-left:6px;' method='POST' action=".route('admin.restaurents.delete',['id'=>$post->id]).">";
                
                 $data['action'] .=  csrf_field();
@@ -130,13 +131,18 @@ class RestaurentsController extends Controller
         );
         echo json_encode($json_data); 
     }
-
     public function destroy($id)
     {   
         $restaurents = Restaurents::findOrFail($id);
         $restaurents->is_deleted = 1;
         $restaurents->save();
         return redirect()->route('admin.restaurents.index')->with('message',"Restaurents Deleted Successfully");
+      
+    }
+    public function detail($id)
+    {   
+        $restaurents = Restaurents::findOrFail($id);
+        return view('admin.restaurents.detail');
       
     }
 

@@ -68,9 +68,8 @@ $siteSettings = !empty($siteSettings) ? $siteSettings : new SiteSettings;
                 </a>
               </div>
               <div class="login-main">
-                <form class="theme-form" method="POST" action="{{ route('login') }}">
+                <form class="theme-form" id="loginForm" method="POST" action="{{ route('login') }}">
                     @csrf
-
                     <div class="form-group">
                         <label for="email" class="col-form-label">{{ __('E-Mail Address') }}</label>
                         <input class="form-control @error('email') is-invalid @enderror" id="email"
@@ -102,7 +101,11 @@ $siteSettings = !empty($siteSettings) ? $siteSettings : new SiteSettings;
                         @if (Route::has('password.request'))
                             <a class="link"
                                 href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}?</a>
-                            <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+                            <button class="btn btn-primary btn-block ldr-btn" type="submit" onclick="loaderActive(this)" > Sign in
+                                <div class="loader-box" style="display: none;" id="loaderBox">
+                                    <div class="loader-3"></div>
+                                    </div>
+                            </button>
                         @endif
                     </div>
                 </form>
@@ -132,7 +135,12 @@ $siteSettings = !empty($siteSettings) ? $siteSettings : new SiteSettings;
     // notify("successfully",'success','bottom','right');
     // notify("quantity_exceeds",'warning','bottom','right');
     });
-    
+    function loaderActive(objs){
+        jQuery("#loaderBox").css("display","block");
+        jQuery(objs).prop('disabled', true);
+        jQuery( "#loginForm" ).submit();
+
+    }
     function notify(message,type,from,align){		
             $.notify({
                 // options
