@@ -7,10 +7,6 @@
                 <div class="row">
                     <div class="col-6">
                         <h3>{{ __('message.categories') }}</h3>
-                        <p>
-                            <a href="{{ route('admin.categories.form',['id'=>0])}}" class="btn btn-success"><i class="fa fa-edit" aria-hidden="true"></i>Add New </a>
-                            <a style="color: white" class="btn btn-danger deletesellected" onclick='multipleDelete("{{route("admin.categories.alldelete")}}")'> <i class="fa fa-trash" aria-hidden="true"></i>Delete </a>
-                        </p>
                     </div>
                     <div class="col-6">
                         <ol class="breadcrumb">
@@ -33,7 +29,12 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div id="tabarticleid_wrapper" class="dataTables_wrapper no-footer">
-                     
+                                        <div class="row">
+                                            <div class="col-md-12 text-right">
+                                                <a href="{{ route('admin.categories.form',['id'=>0])}}" class="mb-4 btn btn-success"><i class="fa fa-edit" aria-hidden="true"></i>Add New </a>
+                                                <a style="color: white" class="mb-4 btn btn-danger deletesellected" onclick='multipleDelete("{{route("admin.categories.alldelete")}}")'> <i class="fa fa-trash" aria-hidden="true"></i>Delete </a>
+                                            </div>
+                                        </div>
                                         <table id="example" class="display nowrap" style="width:100%" role="grid" aria-describedby="tabarticleid_info" style="width: 100%px;">
                                             <thead>
                                                 <tr role="row">

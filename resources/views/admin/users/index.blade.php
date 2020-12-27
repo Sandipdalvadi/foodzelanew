@@ -7,9 +7,6 @@
                 <div class="row">
                     <div class="col-6">
                         <h3>{{ __('message.users') }}</h3>
-                        <p>
-                            <a style="color: white" class="btn btn-danger deletesellected" onclick='multipleDelete("{{route("admin.users.alldelete")}}")'> <i class="icofont icofont-ui-delete"></i>Delete </a>
-                        </p>
                     </div>
                     <div class="col-6">
                         <ol class="breadcrumb">
@@ -32,16 +29,23 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div id="tabarticleid_wrapper" class="dataTables_wrapper no-footer">
-                     
-                                        <table id="example" class="display nowrap" style="width:100%" role="grid" aria-describedby="tabarticleid_info" style="width: 100%px;">
-                                            <div class="col-md-3" style="margin-bottom: 10px;">
-                                                <select class="form-control js-example-basic-single" onchange="usersDatatable()" name="status" id="selectStatus">
-                                                    <option value="3">All</option>
-                                                    <option value="2">Pening</option>
-                                                    <option value="0">In Active</option>
-                                                    <option value="1">Active</option>
-                                                </select>
+                                        <div class="row">
+                                            <div class="col-md-3" style="">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="mr-2">Status</span> 
+                                                    <select class="mb-4 form-control js-example-basic-single" onchange="usersDatatable()" name="status" id="selectStatus">
+                                                        <option value="3">All</option>
+                                                        <option value="2">Pening</option>
+                                                        <option value="0">In Active</option>
+                                                        <option value="1">Active</option>
+                                                    </select>
+                                                </div> 
                                             </div>
+                                            <div class="col-md-9 text-right">
+                                                <a style="color: white" class="mb-4 btn btn-danger deletesellected" onclick='multipleDelete("{{route("admin.users.alldelete")}}")'> <i class="icofont icofont-ui-delete"></i>Delete </a>
+                                            </div>
+                                        </div>
+                                        <table id="example" class="display nowrap" style="width:100%" role="grid" aria-describedby="tabarticleid_info" style="width: 100%px;">
                                             <thead>
                                                 <tr role="row">
                                                     <th class="text-center sorting_asc" style="text-align: center; width: 100px;" rowspan="1" colspan="1" aria-label="">
