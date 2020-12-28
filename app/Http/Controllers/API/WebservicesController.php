@@ -637,6 +637,7 @@ class WebservicesController extends Controller
             $bankAccount->save();
             $result = [];
             $bankList = BankList::find($bankAccount->bank_id);
+            $result['id'] = $bankAccount->id ? $bankAccount->id : '';
             $result['name'] = $bankAccount->name ? $bankAccount->name : '';
             $result['bankName'] = $bankList ? $bankList->name : '';
             $result['bankId'] = $bankList ? $bankList->id : '';
