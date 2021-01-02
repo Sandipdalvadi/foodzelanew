@@ -119,6 +119,7 @@ class RestaurentOwnersController extends Controller
                 
                 
                 $data['action'] = "<div style='display: flex;'>
+                <a class='btn btn-primary' href=".route('admin.restaurent_owners.detail',['id'=>$post->id])."><i class='icofont icofont-eye-alt'></i></a>
                 <form style='float:left;margin-left:6px;' method='POST' action=".route('admin.restaurent_owners.delete',['id'=>$post->id]).">";
                
                 $data['action'] .=  csrf_field();
@@ -137,6 +138,12 @@ class RestaurentOwnersController extends Controller
         echo json_encode($json_data); 
     }
     
+    public function detail($id)
+    {   
+        $user = User::findOrFail($id);
+        return view('admin.restaurent_owners.detail',['user'=>$user]);
+      
+    }
     public function destroy($id)
     {   
         $user = User::findOrFail($id);

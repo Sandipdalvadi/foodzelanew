@@ -127,18 +127,18 @@ class RestaurentsController extends Controller
         );
         echo json_encode($json_data); 
     }
+    public function detail($id)
+    {   
+        $restaurents = Restaurents::with('hasOneUser')->findOrFail($id);
+        return view('admin.restaurents.detail',['restaurents'=>$restaurents]);
+      
+    }
     public function destroy($id)
     {   
         $restaurents = Restaurents::findOrFail($id);
         $restaurents->is_deleted = 1;
         $restaurents->save();
         return redirect()->route('admin.restaurents.index')->with('message',"Restaurents Deleted Successfully");
-      
-    }
-    public function detail($id)
-    {   
-        $restaurents = Restaurents::with('hasOneUser')->findOrFail($id);
-        return view('admin.restaurents.detail',['restaurents'=>$restaurents]);
       
     }
 

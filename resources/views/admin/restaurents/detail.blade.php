@@ -26,7 +26,7 @@
                                 <a href="{{ route('admin.home') }}"> <i data-feather="home"></i></a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="{{ route('admin.home') }}"> {{ __('message.restaurents') }}</a>
+                                <a href="{{ route('admin.restaurents.index') }}"> {{ __('message.restaurents') }}</a>
                             </li>
                             <li class="breadcrumb-item">{{ __('message.restaurents_detail') }}</li>
                         </ol>
@@ -46,7 +46,7 @@
                             <img style="width: 136px;height: 136px;"class="rounded-circle" src="{{ $userImg }}" alt="">
                         </div>
                         <div class="text-center profile-details mt-3">
-                            <b class="mb-1 d-block">Restauren id: {{ $restaurents->id }}</b>
+                            <b class="mb-1 d-block">{{ __('message.restauren_id') }}: {{ $restaurents->id }}</b>
                             <h4>{{ __('message.restaurent_name') }}: {{ $restaurents->name ? $restaurents->name : '' }}</h4>
                             <h6>{{ __('message.restaurent_owner_name') }}: {{ $userObj ? $userObj->name : '' }}</h6>
                         </div>

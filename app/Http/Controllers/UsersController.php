@@ -118,6 +118,7 @@ class UsersController extends Controller
                 
                 
                 $data['action'] = "<div style='display: flex;'>
+                <a class='btn btn-primary' href=".route('admin.users.detail',['id'=>$post->id])."><i class='icofont icofont-eye-alt'></i></a>
                 <form style='float:left;margin-left:6px;' method='POST' action=".route('admin.users.delete',['id'=>$post->id]).">";
                
                 $data['action'] .=  csrf_field();
@@ -136,6 +137,12 @@ class UsersController extends Controller
         echo json_encode($json_data); 
     }
     
+    public function detail($id)
+    {   
+        $user = User::findOrFail($id);
+        return view('admin.users.detail',['user'=>$user]);
+      
+    }
     public function destroy($id)
     {   
         $user = User::findOrFail($id);
