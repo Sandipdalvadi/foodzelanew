@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
-use Validator, DB, Hash, Auth, Carbon, Session, Lang, App, URL;
+use Validator, DB, Hash, Auth, Session, Lang, App, URL;
 use App\User;
 use App\Models\Restaurents;
 use App\Models\Categories;
@@ -15,7 +15,7 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
-
+use Carbon\Carbon;
 class WebservicesController extends Controller
 {
     public function register(Request $request)
@@ -667,6 +667,46 @@ class WebservicesController extends Controller
                     $response = [];
                     $response['id'] = $bankList->id;
                     $response['name'] = $bankList->name ? $bankList->name : '';
+                    $responses[] = $response;
+                }
+                $response = array('success' => 1 ,'message' => 'Bank list loaded successfully.', 'result' => $responses);
+                echo json_encode($response,JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);exit;
+            }
+            else{
+                $response = array('success' => 0, 'message' => 'Bank not found yet.');
+                echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);    
+            }
+        }
+        catch (Exception $e) {
+            $response = array('success' => 0, 'message' => $e->getMessage());
+            echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+            exit;
+        }
+    }
+    public function restaurentListByOwner()
+    {
+        $input = file_get_contents('php://input');
+        $post = json_decode($input, true);
+        
+        try {
+            if ((!isset($post['userId'])) || (empty($post['userId']))) {
+                $response = array('success' => 0, 'message' => 'All Fields Are Required');
+                echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+                exit;
+            }
+            $restaurents = Restaurents::where('user_id',$post['userId'])->where('is_deleted',0)->where('status',1)->get();
+            $responses = [];
+            if(count($restaurents)){
+                foreach($restaurents as $restaurent){
+                    $response = [];
+                    $response['id'] = $restaurent->id;
+                    $response['name'] = $restaurent->name ? $restaurent->name : '';
+                    $response['description'] = $restaurent->description ? $restaurent->description : '';
+                    $response['image'] = $restaurent->owner_logo ? file_exists_in_folder('ownerLogo', $restaurent->owner_logo) : file_exists_in_folder('ownerLogo', '');
+                    $response['openTime'] = $restaurent->open_time ? $restaurent->open_time : '';
+                    $response['closeTime'] = $restaurent->close_time ? $restaurent->close_time : '';
+                    $response['isOpen'] = is_open_restaurent($response['openTime'], $response['closeTime']);
+                    $response['rating'] = 4.5;
                     $responses[] = $response;
                 }
                 $response = array('success' => 1 ,'message' => 'Bank list loaded successfully.', 'result' => $responses);

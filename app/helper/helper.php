@@ -64,3 +64,18 @@
             return $time = $type == "" ? date("Y/m/d",$timestamp) : date($type,$timestamp);
         }
     }
+
+    function is_open_restaurent($openTime = "" , $closeTime = ""){
+        date_default_timezone_set("Asia/Calcutta");
+        $date = date('d-m-Y');
+        $return = false;
+        if($openTime != "" && $closeTime != ""){
+            $nowTime = strtotime(date('Y-m-d H:i:s'));
+            $openTime = strtotime($date." ".$openTime);
+            $closeTime = strtotime($date." ".$closeTime);
+            if ($openTime < $nowTime && $closeTime > $nowTime) {
+                $return = true;
+            }
+        }
+        return $return;
+    }
