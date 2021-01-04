@@ -29,3 +29,5 @@ Route::post('restaurentOwnerDocVerified', 'API\WebservicesController@restaurentO
 Route::post('addBankAccount', 'API\WebservicesController@addBankAccount')->middleware('api_row');
 Route::post('bankList', 'API\WebservicesController@bankList')->middleware('api_row');
 Route::post('restaurentListByOwner', 'API\WebservicesController@restaurentListByOwner')->middleware('api_row');
+Route::post('addFood', 'API\WebservicesController@addFood')->middleware('api_form');
+Route::post('foodList', 'API\WebservicesController@foodList')->middleware('api_row');

@@ -11,6 +11,8 @@ use App\Models\SiteSettings;
 use App\Models\BankAccount;
 use App\Models\BankList;
 use App\Models\RestaurentCategory;
+use App\Models\Foods;
+use App\Models\FoodsImages;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -709,11 +711,119 @@ class WebservicesController extends Controller
                     $response['rating'] = 4.5;
                     $responses[] = $response;
                 }
-                $response = array('success' => 1 ,'message' => 'Bank list loaded successfully.', 'result' => $responses);
+                $response = array('success' => 1 ,'message' => 'Restaurents loaded successfully.', 'result' => $responses);
                 echo json_encode($response,JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);exit;
             }
             else{
-                $response = array('success' => 0, 'message' => 'Bank not found yet.');
+                $response = array('success' => 0, 'message' => 'Restaurents not found yet.');
+                echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);    
+            }
+        }
+        catch (Exception $e) {
+            $response = array('success' => 0, 'message' => $e->getMessage());
+            echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+            exit;
+        }
+    }
+
+    public function addFood(Request $request)  //api edit profile
+    {
+        $post = $request->all();
+        $images = $request->file('images');
+        $decode = json_decode($post['json_content']);
+        try {
+            if ((!isset($decode->nameAr)) || (empty($decode->nameAr)) || (!isset($decode->nameEn)) || (empty($decode->nameEn)) || (!isset($decode->price)) || (empty($decode->price)) || (!isset($decode->description)) || (!isset($decode->ingredients)) || (!isset($decode->weight)) || (!isset($decode->featured)) || (!isset($decode->restaurantId)) || (!isset($decode->categoryId))) {
+                $response = array('success' => 0, 'message' => 'All Fields Are Required');
+                echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+                exit;
+            }
+            
+            $foods = new Foods;
+            $foods->name_ar = $decode->nameAr;
+            $foods->name_en = $decode->nameEn;
+            $foods->price = $decode->price;
+            $foods->discount_price = $decode->discountPrice;
+            $foods->description = $decode->description;
+            $foods->ingredients = $decode->ingredients;
+            $foods->weight = $decode->weight;
+            $foods->featured = $decode->featured;
+            $foods->restaurant_id = $decode->restaurantId;
+            $foods->category_id = $decode->categoryId;
+            $foods->status = $decode->isActive;
+            $foods->save();
+            if (count($images)) {
+                // $file = $liceneseDelivery;response
+                foreach($images as $file){
+                    $foodsImages = new FoodsImages;
+                    $image_name = str_replace(' ', '-', $file->getClientOriginalName());
+                    $picture = time() . "." . $image_name;
+                    $destinationPath = public_path('foods/');
+                    $file->move($destinationPath, $picture);
+                    $foodsImages->image = $picture;
+                    $foodsImages->food_id = $foods->id;
+                    $foodsImages->save();
+                }
+            }
+            $response = $this->foodResponse($foods);
+            
+            $responses = array('success' => 1, 'message' => 'Food Succeessfully','result' => $response);
+            echo json_encode($responses, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+            exit;
+        } catch (Exception $e) {
+            $response = array('success' => 0, 'message' => $e->getMessage());
+            echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+            exit;
+        }
+    }
+    public function foodResponse($foodObj){
+        $response['id'] = $foodObj->id;
+        $response['nameAr'] = $foodObj->name_ar ? $foodObj->name_ar : '';
+        $response['nameEn'] = $foodObj->name_en ? $foodObj->name_en : '';
+        $response['price'] = $foodObj->price ? $foodObj->price : 0;
+        $response['discountPrice'] = $foodObj->discount_price ? $foodObj->discount_price : 0;
+        $response['description'] = $foodObj->description ? $foodObj->description : '';
+        $response['ingredients'] = $foodObj->ingredients ? $foodObj->ingredients : '';
+        $response['weight'] = $foodObj->weight ? $foodObj->weight : 0;
+        $response['featured'] = $foodObj->featured ? $foodObj->featured : 0;
+        $response['restaurantId'] = $foodObj->restaurant_id ? $foodObj->restaurant_id : 0;
+        $response['categoryId'] = $foodObj->category_id ? $foodObj->category_id : 0;
+        $response['status'] = $foodObj->status ? $foodObj->status : 0;
+        $categoryObj = $foodObj->hasOneCategory ? $foodObj->hasOneCategory : [];
+        $response['nameEn'] = $categoryObj ? $categoryObj->name_en : '';
+        $response['nameAr'] = $categoryObj ? $categoryObj->name_ar : '';
+        $foodsImagesObjs = $foodObj->hasManyFoodsImages ? $foodObj->hasManyFoodsImages : [];
+        $response['images'] = [];
+        if(count($foodsImagesObjs)){
+            foreach($foodsImagesObjs as $foodsImagesObj){
+                $response['images'][] = $foodsImagesObj ? file_exists_in_folder('foods',$foodsImagesObj->image) : file_exists_in_folder('foods','');
+            }
+        }
+        else{
+            $response['images'][] = file_exists_in_folder('foods','');   
+        }
+        return $response;
+    }
+    public function foodList(){
+        $input = file_get_contents('php://input');
+        $post = json_decode($input, true);
+        
+        try {
+            if ((!isset($post['restaurantId'])) || (empty($post['restaurantId']))) {
+                $response = array('success' => 0, 'message' => 'All Fields Are Required');
+                echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);
+                exit;
+            }
+            $foods = Foods::where('restaurant_id',$post['restaurantId'])->where('is_deleted',0)->where('status',1)->get();
+            $responses = [];
+            if(count($foods)){
+                foreach($foods as $food){
+                    $responses[] = $this->foodResponse($food);
+                }
+                $response = array('success' => 1 ,'message' => 'Foods loaded successfully.', 'result' => $responses);
+                echo json_encode($response,JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);exit;
+            }
+            else{
+                $response = array('success' => 0, 'message' => 'Foods not found yet.');
                 echo json_encode($response, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_UNESCAPED_UNICODE|JSON_HEX_AMP);    
             }
         }

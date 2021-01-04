@@ -33,6 +33,9 @@
             elseif($directory == "ownerLogo"){
                 return public_url().'/default_images/blank_image.jpeg';
             }
+            elseif($directory == "foods"){
+                return public_url().'/default_images/blank_image.jpeg';
+            }
         }
     }
     function old_file_remove($directory,$fileName){
